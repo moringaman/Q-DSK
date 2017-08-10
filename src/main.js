@@ -13,11 +13,6 @@ import { store } from './store'
 import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import * as VueGoogleMaps from 'vue2-google-maps'
-import VueCordova from 'vue-cordova'
-
-Vue.use(VueCordova, {
-  optionTestKey: 'optionTestValue'
-})
 
 Vue.use(Quasar) // Install Quasar Framework
 

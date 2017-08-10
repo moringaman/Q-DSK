@@ -68,13 +68,11 @@ export default {
    },
    methods: {
      getLocation: function () {
-       if (!this.cordova.plugins.deviceready) {
+       if (!cordova.plugins.deviceready) {
          setTimeout(function () {}, 10000)
        }
        cordova.plugins.geolocation.getCurrentPosition((position) => {
          return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
-        // this.center = 'lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude
-        // window.alert('Current position : ' + position.coords.latitude + ',' + position.coords.longitude)
        }, (error) => {
          window.alert('FAILED Error #' + error.code + ' ' + error.message)
        }, {
@@ -83,8 +81,8 @@ export default {
        })
      },
      takePicture: function () {
-       if (!this.$cordova.plugins.camera) {
-         window.alert('Vue.cordova.camera not found !')
+       if (!cordova.plugins.camera) {
+         window.alert('cordova.camera not found !')
          return
        }
        cordova.plugins.camera.getPicture((imageURI) => {
