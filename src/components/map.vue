@@ -68,9 +68,9 @@ export default {
    },
    methods: {
      getLocation: function () {
-       if (!cordova.plugins.deviceready) {
-         setTimeout(function () {}, 10000)
-       }
+       // if (!cordova.plugins.deviceready) {
+         // setTimeout(function () {}, 10000)
+       // }
        cordova.plugins.geolocation.getCurrentPosition((position) => {
          return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
        }, (error) => {
@@ -81,10 +81,10 @@ export default {
        })
      },
      takePicture: function () {
-       if (!cordova.plugins.camera) {
-         window.alert('cordova.camera not found !')
-         return
-       }
+       // if (!cordova.plugins.camera) {
+         // window.alert('cordova.camera not found !')
+         // return
+       // }
        cordova.plugins.camera.getPicture((imageURI) => {
          window.alert('Photo URI : ' + imageURI + '' + this.location)
        }, (message) => {
