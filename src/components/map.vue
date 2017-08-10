@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <q-layout>
     <gmap-map
     :center="center"
     :disableDefaultUI="true"
     :zoom="6"
-    style="width: 100%; height: 500px; z-index: 0">
+    style="width: 100%; height: 100%; z-index: 0">
     <gmap-info-window
      :options="infoOptions"
      :position="infoWindowPos"
@@ -29,7 +29,7 @@
     </div>
   </gmap-map>
 
-</div>
+</q-layout>
 
 </template>
 

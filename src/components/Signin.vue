@@ -1,4 +1,5 @@
 <template>
+  <q-layout>
   <div class="layout-view">
     <div class="layout-padding form">
 
@@ -14,10 +15,10 @@
           <label><i class="material-icons">lock</i>Your password</label>
         </div>
         <button class="light full-width outline big" @click="signIn">Sign In</button>
-
-        <small> Sign Up </small>
+        <small> Register New Account </small>
     </div>
   </div>
+</q-layout>
 </template>
 
 <script>
@@ -59,7 +60,7 @@ export default {
 }
 
 input {
-  margin-top: 20px;
+  margin-top: 30px;
   width: 90%;
 }
 
@@ -71,25 +72,37 @@ input:nth-child(2) {
 
 .layout-view {
   background-image: url(../assets/skygaze.jpg);
-  background-size: 110%;
-  height: 600px;
+  background-size: 120%;
+  height: 100%;
 
 }
 
 i {
-  color: white;
+  color: rgba(250,250,250, 0.5);
   margin-right: 10px;
+  font-size: 24px;
 }
 
 button {
-  margin-top: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: 20px;
   color: white;
+  border: 0px solid rgba(250,250,250, 0.5);
 }
+
+
+
 
 h4 {
   color: white;
   margin: 50px auto;
+}
+
+small {
+  margin-top: 20px;
+  color: rgba(250,250,250, 0.5);
+  font-size: 1em;
 }
 
 </style>
