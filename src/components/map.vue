@@ -4,7 +4,7 @@
     :center="center"
     :disableDefaultUI="true"
     :zoom="6"
-    style="width: 100%; height: 100%; z-index: 0">
+    style="width: 100%; height: 93vh; z-index: 0">
     <gmap-info-window
      :options="infoOptions"
      :position="infoWindowPos"
@@ -68,10 +68,10 @@ export default {
    },
    methods: {
      getLocation: function () {
-       // if (!cordova.plugins.deviceready) {
-         // setTimeout(function () {}, 10000)
-       // }
-       cordova.plugins.geolocation.getCurrentPosition((position) => {
+       if (!navigator.deviceready) {
+         setTimeout(function () {}, 10000)
+       }
+       navigator.geolocation.getCurrentPosition((position) => {
          return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
        }, (error) => {
          window.alert('FAILED Error #' + error.code + ' ' + error.message)
@@ -81,17 +81,17 @@ export default {
        })
      },
      takePicture: function () {
-       // if (!cordova.plugins.camera) {
-         // window.alert('cordova.camera not found !')
-         // return
-       // }
-       cordova.plugins.camera.getPicture((imageURI) => {
+       if (!navigator.camera) {
+         window.alert('cordova.camera not found !')
+         return
+       }
+       navigator.camera.getPicture((imageURI) => {
          window.alert('Photo URI : ' + imageURI + '' + this.location)
        }, (message) => {
          window.alert('FAILED : ' + message)
        }, {
          quality: 50,
-         destinationType: cordova.plugins.camera.DestinationType.FILE_URI
+         destinationType: navigator.camera.DestinationType.FILE_URI
        })
      },
      toggleInfoWindow: function (marker, idx) {

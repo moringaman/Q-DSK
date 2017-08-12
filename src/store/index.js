@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
+import { Loading } from 'quasar'
 
 Vue.use(Vuex)
 
@@ -10,26 +11,31 @@ export const store = new Vuex.Store({
     loadedMarkers: [
       {
         sender: 'John Smith',
+        userId: 'iuyrewiudhiwedhwe',
         timestamp: '12:00:00',
         position: {lat: 53.5, lng: -1.34}
       },
       {
         sender: 'Andre Jones',
+        userId: 'dscbdshwidbioiaq',
         timestamp: '12:00:00',
         position: {lat: 51.5, lng: -1.04}
       },
       {
         sender: 'Peter Davis',
+        userId: 'duhhwiw9chbcosw0jk',
         timestamp: '12:00:00',
         position: {lat: 50.5, lng: -1.36}
       },
       {
         sender: 'Susan Phillips ',
+        userId: '43bjhfsd9h8fbskqwa',
         timestamp: '12:00:00',
         position: {lat: 51.2, lng: -1.24}
       }
     ],
     user: null,
+    avatar: null,
     loading: false,
     error: null
   },
@@ -39,6 +45,9 @@ export const store = new Vuex.Store({
     },
     setUser (state, payload) {
       state.user = payload
+    },
+    setAvatar (state, payload) {
+      state.avatar = payload
     },
     setLoading (state, payload) {
       state.loading = payload
@@ -52,14 +61,21 @@ export const store = new Vuex.Store({
   },
   actions: {
     signUserIn ({commit}, payload) {
+      Loading.show(
+        {
+          message: 'Authenticating'
+        }
+      )
       commit('setLoading', true)
       commit('clearError')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
+            Loading.hide()
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
+              email: payload.email,
               createdMarkers: []
             }
             commit('setUser', newUser)
@@ -73,18 +89,47 @@ export const store = new Vuex.Store({
           }
         )
     },
+    async getAvatar ({commit}, payload) {
+      // TODO Use axios to fetch avatar data
+    },
+    createUserProfile (payload) {
+      return new Promise((resolve, reject) => {
+        firebase.database()
+        .ref('users/' + payload.userId).set(
+          {
+            email: payload.email
+          }
+        ).then(response => {
+          resolve(response)
+        }, error => {
+          reject(error)
+        })
+      })
+    },
     signUserUp ({commit}, payload) {
+      Loading.show(
+        {
+          message: 'Creating Account'
+        }
+      )
       commit('setLoading', true)
       commit('clearError')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           user => {
+            Loading.hide()
             commit('setLoading', false)
             const newUser = {
               id: user.uid,
               createdMarkers: []
             }
-            commit('setUser', newUser)
+            // Add user profile to database
+            firebase.database()
+            .ref('users/' + newUser.id).set(
+              {
+                email: payload.email
+              }
+            )
           }
         )
         .catch(
@@ -106,6 +151,12 @@ export const store = new Vuex.Store({
     },
     user (state) {
       return state.user
+    },
+    loading (state) {
+      return state.loading
+    },
+    avatar (state) {
+      return state.avatar
     }
   }
 })

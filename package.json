@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "A Quasar App",
   "author": "Your Name",
+  "licence": "Creative Commons",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/moringaman/Q-DSK.git"
+  },
   "scripts": {
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
@@ -16,7 +21,7 @@
     "material-design-icons": "^3.0.1",
     "moment": "^2.15.0",
     "promise-polyfill": "^6.0.2",
-    "quasar-framework": "^0.13.4",
+    "quasar-framework": "^0.13.10",
     "roboto-fontface": "^0.7.0",
     "vue": "^2.3.0",
     "vue-cordova": "^0.1.2",

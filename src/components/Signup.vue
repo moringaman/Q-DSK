@@ -4,15 +4,20 @@
     <div class="layout-padding form">
    <img src="../assets/DarkSkies_Logo.png">
         <div class="floating-label">
-          <input required v-model="email" class="full-width">
+          <input required :class="{'has-error':!email == '' && !isValid}" v-model="email" class="full-width">
           <label><i class="material-icons">email</i>Your email</label>
         </div>
         <div class="floating-label">
           <input required v-model="password" type="password" class="full-width">
           <label><i class="material-icons">lock</i>Your password</label>
         </div>
-        <button class="light full-width outline big" @click="signIn">Sign In</button>
-        <router-link :to="'/signup'">Register new account</router-link>
+        <div class="floating-label">
+          <input required v-model="passwordComf" type="password" class="full-width"
+          :class="{'has-error':!matchFound}">
+          <label><i class="material-icons">lock</i>Confirm password</label>
+        </div>
+        <button :class="{'disabled':!matchFound || !isValid}" class="light full-width outline big" @click="signUp">Sign Up</button>
+        <router-link :to="'/signin'">Already have an account Sign In</router-link>
     </div>
   </div>
 </q-layout>
@@ -20,12 +25,15 @@
 
 <script>
 import { AppFullscreen } from 'quasar'
+import { mapGetters } from 'vuex'
+var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
   data () {
     return {
       email: '',
       password: '',
+      passwordComf: '',
       loggedIn: false
     }
   },
@@ -34,8 +42,29 @@ export default {
     // AppFullscreen.request()
   },
   computed: {
-    loading () {
-      return this.$store.getters.loading
+    ...mapGetters({
+      loading: 'loading',
+      userInfo: 'user'
+    }),
+    // loading () {
+      // return this.$store.getters.loading
+    // },
+    // userInfo () {
+      // return this.$store.getters.user
+    // },
+    validation: function () {
+      return {
+        email: emailRE.test(this.email)
+      }
+    },
+    isValid: function () {
+      var validation = this.validation
+      return Object.keys(validation).every(function (key) {
+        return validation[key]
+      })
+    },
+    matchFound: function () {
+      return (this.password === this.passwordComf)
     }
   },
   watch: {
@@ -49,9 +78,10 @@ export default {
     }
   },
   methods: {
-    signIn () {
+    signUp () {
           // TODO login to firebase then redirect to app page
-      this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+      this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      // setTimeout(this.createUserProfile, 2000)
     }
   }
 }
@@ -59,8 +89,8 @@ export default {
 
 <style scoped>
 
-.layout-view {
-  text-align: center;
+.layout-view-padding {
+  height: 2vh;
 }
 
 .form {
@@ -89,7 +119,7 @@ input:nth-child(2) {
   background-image: url(../assets/skygaze.jpg);
   background-size: 120%;
   height: 100vh;
-
+  text-align: center;
 }
 
 i {

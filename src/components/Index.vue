@@ -43,13 +43,53 @@
         <q-drawer ref="rightDrawer" right-side>
           <div class="toolbar">
             <q-toolbar-title>
-              Options
+              <i class="item-primary">edit</i> Profile Settings
             </q-toolbar-title>
           </div>
-          <div class="list no-border platform-delimiter">
-              <q-drawer-link icon="" :to="{path: '/', exact: true}">
-                Sign Out
-              </q-drawer-link>
+            <div class="list">
+              <p class="text-center light-paragraph"></p>
+              <div class="item multiple-lines">
+               <div class="item-content">
+                 <div class="floating-label">
+                   <input class="full-width">
+                   <label>User Name</label>
+                 </div>
+               </div>
+             </div>
+              <div class="item multiple-lines">
+               <div class="item-content">
+                 <div class="floating-label">
+                   <input class="full-width">
+                   <label>Country</label>
+                 </div>
+               </div>
+             </div>
+             <div class="item multiple-lines">
+                <div class="item-content">
+                  <div class="floating-label">
+                    <textarea placeholder="tell everyone a little about yourself here" class="full-width"></textarea>
+                    <label>Interests</label>
+                  </div>
+                </div>
+              </div>
+              <hr>
+                   <label class="item">
+            <div class="item-content has-secondary">
+              Events and reminders?
+            </div>
+            <div class="item-secondary">
+              <q-toggle v-model="Events"></q-toggle>
+            </div>
+          </label>
+          <label class="item">
+            <div class="item-content has-secondary">
+              Newsletter?
+            </div>
+            <div class="item-secondary">
+              <q-toggle v-model="Newsletter" class="green"></q-toggle>
+            </div>
+          </label>
+      </div>
             </div>
         </q-drawer>
 </q-layout>
@@ -65,7 +105,8 @@ export default {
   },
   data () {
     return {
-
+      Events: false,
+      Newsletter: true
     }
   },
   computed: {
