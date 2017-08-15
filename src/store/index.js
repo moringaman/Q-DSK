@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
-import { Loading } from 'quasar'
+import { Loading, Toast } from 'quasar'
 
 Vue.use(Vuex)
 
@@ -79,18 +79,38 @@ export const store = new Vuex.Store({
               createdMarkers: []
             }
             commit('setUser', newUser)
+            store.dispatch('showMessage', 'Welcome Back')
           }
         )
         .catch(
           error => {
             commit('setLoading', false)
+            Loading.hide()
             commit('setError', error)
-            console.log(error)
+            store.dispatch('showMessage', error)
+            // alert(error)
           }
         )
     },
+    showMessage ({dispatch}, payload) {
+      Toast.create({
+        html: `<strong>${payload}</strong>`,
+        icon: 'error_outline',
+        timeout: 4000,
+        color: '#fff',
+        bgColor: 'rgba(255,0,1, 0.6)',
+        button: {
+          label: '',
+          handler () {
+          // Specify what to do when button is clicked/tapped
+          },
+          color: '#000'
+        }
+      })
+    },
     async getAvatar ({commit}, payload) {
       // TODO Use axios to fetch avatar data
+      // const URL = `http://www.avatarapi.com/avatar.asmx/GetProfile?email=${peter.smith@gmail.com}&username=${xxxxx}&password=${xxxxx}`
     },
     createUserProfile (payload) {
       return new Promise((resolve, reject) => {
