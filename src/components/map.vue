@@ -76,7 +76,7 @@ export default {
          window.alert('No geo-location')
        }
        navigator.geolocation.getCurrentPosition((position) => {
-         window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
+         // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
          this.location = {lat: position.coords.latitude, lng: position.coords.longitude}
          return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
        }, (error) => {
@@ -92,7 +92,7 @@ export default {
          return
        }
        navigator.camera.getPicture((imageURI) => {
-         window.alert('Photo URI : ' + imageURI + '' + this.location)
+         // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
          this.photoURL = imageURI
          this.$store.dispatch('createMarker', {
            userId: this.user.id,
