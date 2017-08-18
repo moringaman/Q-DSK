@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
+// import Axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -41,7 +42,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     createMarker (state, payload) {
-      state.loadedMarkers.push(payload)
+      state.loadedMarkers.push()
     },
     setUser (state, payload) {
       state.user = payload
@@ -60,6 +61,17 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    createMarker ({commit}, payload) {
+      // TODO take camera image location, UID, time/date, geo-loc and create marker entry in Firebase
+      firebase.database.ref('markers/').push(
+        {
+          dateTime: payload.dateTime,
+          location: payload.location,
+          imageURL: payload.imageURL,
+          userId: payload.userId
+        }
+      )
+    },
     signUserIn ({commit}, payload) {
       Loading.show(
         {
@@ -108,10 +120,13 @@ export const store = new Vuex.Store({
         }
       })
     },
-    async getAvatar ({commit}, payload) {
+    // async getAvatar ({dispatch}, payload) {
       // TODO Use axios to fetch avatar data
-      // const URL = `http://www.avatarapi.com/avatar.asmx/GetProfile?email=${peter.smith@gmail.com}&username=${xxxxx}&password=${xxxxx}`
-    },
+      // const URL = `http://www.avatarapi.com/avatar.asmx/GetProfile?email=${payload}`
+      // const CRED = `&username=webnostix&password=Malachi01`
+      // const response = await Axios.get(URL + CRED)
+      // return response.json()
+    // },
     createUserProfile (payload) {
       return new Promise((resolve, reject) => {
         firebase.database()
@@ -149,13 +164,19 @@ export const store = new Vuex.Store({
               {
                 email: payload.email
               }
-            )
+            ).then((user) => {
+              store.dispatch('showMessage', 'Your account has been created')
+            }).catch((error) => {
+              store.dispatch('showMessage', error)
+            })
           }
         )
         .catch(
           error => {
+            Loading.hide()
             commit('setLoading', false)
             commit('setError', error)
+            store.dispatch('showMessage', error)
             console.log(error)
           }
         )

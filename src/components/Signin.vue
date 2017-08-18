@@ -34,9 +34,6 @@ export default {
     // AppFullscreen.request()
   },
   computed: {
-    loading () {
-      return this.$store.getters.loading
-    }
   },
   watch: {
     loading (value) {

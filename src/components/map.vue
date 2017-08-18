@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <gmap-map
-    :center="center"
+    :center="{'lat':location.lat, 'lng': location.lng}"
     :disableDefaultUI="true"
     :zoom="6"
     style="width: 100%; height: 93vh; z-index: 0">
@@ -17,7 +17,7 @@
       :position="m.position"
       :clickable="true"
       :draggable="false"
-      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.timestamp"
+      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.timestamp + location.lat"
       @mouseout="statusText = null"
       @click="toggleInfoWindow(m,index)"
     ></gmap-marker>
@@ -48,8 +48,9 @@ export default {
          lng: 0
        },
        infoWinOpen: false,
-       currentMidx: null,
        location: '',
+       photoURL: '',
+       currentMidx: null,
        infoOptions: {
          pixelOffset: {
            width: 0,
@@ -61,17 +62,22 @@ export default {
    computed: {
      markers () {
        return this.$store.getters.loadedMarkers
+     },
+     user () {
+       return this.$store.getters.user
      }
    },
    mounted () {
-    // this.getLocation()
+     this.getLocation()
    },
    methods: {
      getLocation: function () {
-       if (!navigator.deviceready) {
-         setTimeout(function () {}, 10000)
+       if (!navigator.geolocation) {
+         window.alert('No geo-location')
        }
        navigator.geolocation.getCurrentPosition((position) => {
+         window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
+         this.location = {lat: position.coords.latitude, lng: position.coords.longitude}
          return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
        }, (error) => {
          window.alert('FAILED Error #' + error.code + ' ' + error.message)
@@ -87,6 +93,13 @@ export default {
        }
        navigator.camera.getPicture((imageURI) => {
          window.alert('Photo URI : ' + imageURI + '' + this.location)
+         this.photoURL = imageURI
+         this.$store.dispatch('createMarker', {
+           userId: this.user.id,
+           location: this.location,
+           imageURL: this.imageURL,
+           dateTime: new Date().toLocaleString()
+         })
        }, (message) => {
          window.alert('FAILED : ' + message)
        }, {

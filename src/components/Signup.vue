@@ -2,7 +2,8 @@
   <q-layout>
   <div class="layout-view">
     <div class="layout-padding form">
-   <img src="../assets/DarkSkies_Logo.png">
+      <h4>Sign Up Today!</h4>
+   <!-- <img src="../assets/DarkSkies_Logo.png"> -->
         <div class="floating-label">
           <input required :class="{'has-error':!email == '' && !isValid}" v-model="email" class="full-width">
           <label><i class="material-icons">email</i>Your email</label>
@@ -27,7 +28,7 @@
 import { AppFullscreen } from 'quasar'
 import { mapGetters } from 'vuex'
 
-// var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 export default {
   data () {
