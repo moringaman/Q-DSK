@@ -95,16 +95,16 @@ export default {
          // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
          this.photoURL = imageURI
          const markerData = {
-             userId: this.user.id,
-             imageURL: this.imageURL,
-             dateTime: new Date().toLocaleString,
-             location: {
-               lat: this.location.lat,
-               lng: this.location.lng
-             }
+           userId: this.user.id,
+           imageURL: this.imageURL,
+           dateTime: new Date().toLocaleString,
+           location: {
+             lat: this.location.lat,
+             lng: this.location.lng
+           }
          }
-         window.alert(markerData)
-         this.$store.dispatch('createMarker', markerData )
+         window.alert(JSON.stringify(markerData))
+         this.$store.dispatch('createMarker', markerData)
        }, (message) => {
          window.alert('FAILED : ' + message)
        }, {
