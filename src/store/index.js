@@ -63,14 +63,16 @@ export const store = new Vuex.Store({
   actions: {
     createMarker ({commit}, payload) {
       // TODO take camera image location, UID, time/date, geo-loc and create marker entry in Firebase
-      firebase.database().ref('markers').set(
-        {
-          dateTime: payload.dateTime,
-          location: payload.location,
-          imageURL: payload.imageURL,
-          userId: payload.userId
+      const marker = {
+        userId: payload.userId,
+        imageURL: payload.imageURL,
+        dateTime: payload.dateTime,
+        location: {
+          lat: payload.location.lat,
+          lng: payload.location.lng
         }
-      )
+      }
+      firebase.database().ref('markers/').set(marker)
     },
     signUserIn ({commit}, payload) {
       Loading.show(
