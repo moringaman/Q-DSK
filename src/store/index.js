@@ -62,16 +62,6 @@ export const store = new Vuex.Store({
   },
   actions: {
     createMarker ({commit}, payload) {
-      // TODO take camera image location, UID, time/date, geo-loc and create marker entry in Firebase
-      /* const marker = {
-        userId: payload.userId,
-        imageURL: payload.imageURL,
-        dateTime: payload.dateTime,
-        location: {
-          lat: payload.location.lat,
-          lng: payload.location.lng
-        }
-      } */
       firebase.database().ref('markers/').set(payload)
       .then((data) => {
         console.log('success')
@@ -99,7 +89,7 @@ export const store = new Vuex.Store({
               createdMarkers: []
             }
             commit('setUser', newUser)
-            store.dispatch('showMessage', {message: 'Welcome Back', color: 'green'})
+            store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)'})
           }
         )
         .catch(
@@ -107,7 +97,7 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             Loading.hide()
             commit('setError', error)
-            store.dispatch('showMessage', error)
+            store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
             // alert(error)
           }
         )
@@ -118,7 +108,7 @@ export const store = new Vuex.Store({
         icon: 'error_outline',
         timeout: 4000,
         color: '#fff',
-        bgColor: 'rgba(0,128,0, 0.6)',
+        bgColor: payload.color,
         button: {
           label: '',
           handler () {
@@ -173,9 +163,9 @@ export const store = new Vuex.Store({
                 email: payload.email
               }
             ).then((user) => {
-              store.dispatch('showMessage', 'Your account has been created')
+              store.dispatch('showMessage', {message: 'Account Created', color: 'rgba(0,128,0, 0.6)'})
             }).catch((error) => {
-              store.dispatch('showMessage', error)
+              store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
             })
           }
         )
