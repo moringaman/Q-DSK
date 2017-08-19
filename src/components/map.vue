@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <gmap-map
-    :center="{'lat':location.lat, 'lng': location.lng}"
+    :center="{lat: location.lat, lng: location.lng}"
     :disableDefaultUI="true"
     :zoom="6"
     style="width: 100%; height: 93vh; z-index: 0">
@@ -93,7 +93,7 @@ export default {
        }
        navigator.camera.getPicture((imageURI) => {
          // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
-         this.photoURL = imageURI
+         this.photoURL = imageURI.split('/').pop().replace('.jpg', '')
          const markerData = {
            userId: this.user.id,
            imageURL: this.imageURL,
