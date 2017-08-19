@@ -99,7 +99,7 @@ export const store = new Vuex.Store({
               createdMarkers: []
             }
             commit('setUser', newUser)
-            store.dispatch('showMessage', 'Welcome Back')
+            store.dispatch('showMessage', {message: 'Welcome Back', color: 'green'})
           }
         )
         .catch(
@@ -114,11 +114,11 @@ export const store = new Vuex.Store({
     },
     showMessage ({dispatch}, payload) {
       Toast.create({
-        html: `<strong>${payload}</strong>`,
+        html: `<strong>${payload.message}</strong>`,
         icon: 'error_outline',
         timeout: 4000,
         color: '#fff',
-        bgColor: 'rgba(255,0,1, 0.6)',
+        bgColor: 'rgba(0,128,0, 0.6)',
         button: {
           label: '',
           handler () {
