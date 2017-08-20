@@ -23,6 +23,7 @@
     "moment": "^2.15.0",
     "promise-polyfill": "^6.0.2",
     "quasar-framework": "^0.13.10",
+    "randomstring": "^1.1.5",
     "roboto-fontface": "^0.7.0",
     "vue": "^2.3.0",
     "vue-cordova": "^0.1.2",

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
+import Randomstring from 'randomstring'
 // import Axios from 'axios'
 
 Vue.use(Vuex)
@@ -62,12 +63,20 @@ export const store = new Vuex.Store({
   },
   actions: {
     createMarker ({commit}, payload) {
-      firebase.database().ref('markers/').set(payload)
+      // window.alert(JSON.stringify(payload))
+      Loading.show(
+        {
+          message: 'Posting Data'
+        }
+      )
+      let markerId = Randomstring.generate()
+      firebase.database().ref('markers/' + markerId).set(payload)
       .then((data) => {
-        console.log('success')
+        Loading.hide()
+        store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
       })
       .catch((error) => {
-        console.log(error)
+        store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
       })
     },
     signUserIn ({commit}, payload) {

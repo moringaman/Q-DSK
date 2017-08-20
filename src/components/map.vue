@@ -93,17 +93,18 @@ export default {
        }
        navigator.camera.getPicture((imageURI) => {
          // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
-         this.photoURL = imageURI.split('/').pop().replace('.jpg', '')
+         this.photoURL = imageURI
+         let timeTaken = new Date().toLocaleString()
          const markerData = {
            userId: this.user.id,
-           imageURL: this.photoURL,
-           dateTime: new Date().toLocaleString,
+           image: imageURI.split('/').pop(),
+           dateTime: timeTaken,
            location: {
              lat: this.location.lat,
              lng: this.location.lng
            }
          }
-         window.alert(JSON.stringify(markerData))
+         // window.alert(JSON.stringify(markerData))
          this.$store.dispatch('createMarker', markerData)
        }, (message) => {
          window.alert('FAILED : ' + message)
