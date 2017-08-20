@@ -96,7 +96,7 @@ export default {
          this.photoURL = imageURI.split('/').pop().replace('.jpg', '')
          const markerData = {
            userId: this.user.id,
-           imageURL: this.imageURL,
+           imageURL: this.photoURL,
            dateTime: new Date().toLocaleString,
            location: {
              lat: this.location.lat,
