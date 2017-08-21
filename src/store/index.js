@@ -81,6 +81,7 @@ export const store = new Vuex.Store({
         store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
       })
       .catch((error) => {
+        Loading.hide()
         store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
       })
     },
@@ -101,7 +102,7 @@ export const store = new Vuex.Store({
             Loading.hide()
             commit('setLoading', false)
             const newUser = {
-              id: user.uid,
+              uid: user.uid,
               email: payload.email,
               createdMarkers: []
             }
