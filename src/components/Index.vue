@@ -99,6 +99,7 @@
 
 // import { Utils, Platform } from 'quasar'
 import Map from './map.vue'
+import firebase from 'firebase'
 export default {
   components: {
     appMap: Map
@@ -112,6 +113,9 @@ export default {
   computed: {
     user () {
       return this.$store.getters.user
+    },
+    loggedIn () {
+      return this.$store.getters.signedIn
     }
   },
   methods: {
@@ -119,11 +123,23 @@ export default {
       this.$store.dispatch('signOut')
     }
   },
-  mounted () {
-
+  watch: {
+    loggedIn () {
+      this.$router.push('/signin')
+    }
   },
   beforeDestroy () {
 
+  },
+  created () {
+    var user = firebase.auth().currentUser
+    if (user) {
+    // User is signed in.
+      this.$store.commit('setUser', user)
+    }
+    else {
+      this.$router.push('/signin')
+    }
   }
 }
 </script>

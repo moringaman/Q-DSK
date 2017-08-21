@@ -39,7 +39,8 @@ export const store = new Vuex.Store({
     user: null,
     avatar: null,
     loading: false,
-    error: null
+    error: null,
+    loggedIn: false
   },
   mutations: {
     createMarker (state, payload) {
@@ -59,6 +60,9 @@ export const store = new Vuex.Store({
     },
     clearError (state) {
       state.error = null
+    },
+    setLoggedIn (state, payload) {
+      state.loggedIn = payload
     }
   },
   actions: {
@@ -72,12 +76,16 @@ export const store = new Vuex.Store({
       let markerId = Randomstring.generate()
       firebase.database().ref('markers/' + markerId).set(payload)
       .then((data) => {
+        commit('createMarker', payload)
         Loading.hide()
         store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
       })
       .catch((error) => {
         store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
       })
+    },
+    loadMarkers ({commit}, payload) {
+      // TODO query firebase for markers and push to state markers object
     },
     signUserIn ({commit}, payload) {
       Loading.show(
@@ -98,6 +106,7 @@ export const store = new Vuex.Store({
               createdMarkers: []
             }
             commit('setUser', newUser)
+            commit('loggedIn', true)
             store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)'})
           }
         )
@@ -172,6 +181,7 @@ export const store = new Vuex.Store({
                 email: payload.email
               }
             ).then((user) => {
+              commit('loggedIn', true)
               store.dispatch('showMessage', {message: 'Account Created', color: 'rgba(0,128,0, 0.6)'})
             }).catch((error) => {
               store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
@@ -191,6 +201,7 @@ export const store = new Vuex.Store({
     signOut ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
+      commit('loggedIn', false)
     }
   },
   getters: {
@@ -205,6 +216,9 @@ export const store = new Vuex.Store({
     },
     avatar (state) {
       return state.avatar
+    },
+    signedIn (state) {
+      return state.loggedIn
     }
   }
 })

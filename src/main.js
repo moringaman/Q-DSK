@@ -35,9 +35,11 @@ Quasar.start(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
           this.$router.push('/')
+          this.$store.commit('setLoggedIn', true)
         }
         else {
           this.$router.push('/signin')
+          this.$store.commit('setLoggedIn', false)
         }
       })
     },
