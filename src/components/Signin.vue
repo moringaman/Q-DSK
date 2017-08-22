@@ -49,6 +49,12 @@ export default {
     signIn () {
           // TODO login to firebase then redirect to app page
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+      .then((result) => {
+        this.$router.push('/')
+      })
+      .catch((error) => {
+        this.$store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
+      })
     }
   }
 }

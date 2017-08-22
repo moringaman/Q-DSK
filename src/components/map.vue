@@ -4,7 +4,7 @@
     :center="{lat: location.lat, lng: location.lng}"
     :disableDefaultUI="true"
     :zoom="6"
-    style="width: 100%; height: 93vh; z-index: 0">
+    style="width: 100%; height: 90vh; z-index: 0">
     <gmap-info-window
      :options="infoOptions"
      :position="infoWindowPos"
@@ -22,9 +22,9 @@
       @click="toggleInfoWindow(m,index)"
     ></gmap-marker>
     <div slot="visible">
-      <div style="bottom: 0; left: 0; right: 0; line-height: 50px; background-color: rgba(0,0,0, 0.5); color: white; position: absolute; z-index: 100; font-size: 20px">
+      <div style="bottom: 0; left: 0; right: 0; line-height: 50px; bottom: 10px; background-color: rgba(0,0,0, 0.5); color: white; position: absolute; z-index: 100; font-size: 20px">
         {{statusText}}
-        <button @click='takePicture()' big fill>Click Me</button>
+        <button @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button>
       </div>
     </div>
   </gmap-map>
@@ -131,5 +131,7 @@ export default {
 </script>
 
 <style>
-
+.btn-icon {
+  font-size: 36px;
+}
 </style>

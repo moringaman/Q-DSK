@@ -125,7 +125,7 @@ export default {
   },
   watch: {
     loggedIn () {
-      this.$router.push('/signin')
+      // this.$router.push('/signin')
     }
   },
   beforeDestroy () {
@@ -138,7 +138,7 @@ export default {
       this.$store.commit('setUser', user)
     }
     else {
-      this.$router.push('/signin')
+    //  this.$router.push('/signin')
     }
   }
 }
