@@ -24,7 +24,8 @@
     <div slot="visible">
       <div style="bottom: 0; left: 0; right: 0; line-height: 50px; bottom: 10px; background-color: rgba(0,0,0, 0.5); color: white; position: absolute; z-index: 100; font-size: 20px">
         {{statusText}}
-        <button @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button>
+        <app-createnew></app-createnew>
+        <!-- <button @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
       </div>
     </div>
   </gmap-map>
@@ -34,99 +35,105 @@
 </template>
 
 <script>
+import CreateNewMarker from '../components/create-marker.vue'
  // import Vue from 'vue'
 export default {
-   components: {
-   },
-   data: function () {
-     return {
-       center: {lat: 54.0, lng: -1.6},
-       statusText: '',
-       infoContent: '',
-       infoWindowPos: {
-         lat: 0,
-         lng: 0
-       },
-       infoWinOpen: false,
-       location: '',
-       photoURL: '',
-       currentMidx: null,
-       infoOptions: {
-         pixelOffset: {
-           width: 0,
-           height: -35
-         }
-       }
-     }
-   },
-   computed: {
-     markers () {
-       return this.$store.getters.loadedMarkers
-     },
-     user () {
-       return this.$store.getters.user
-     }
-   },
-   mounted () {
-     this.getLocation()
-   },
-   methods: {
-     getLocation: function () {
-       if (!navigator.geolocation) {
-         window.alert('No geo-location')
-       }
-       navigator.geolocation.getCurrentPosition((position) => {
+  components: {
+    appCreatenew: CreateNewMarker
+  },
+  data: function () {
+    return {
+      center: {lat: 54.0, lng: -1.6},
+      statusText: '',
+      infoContent: '',
+      infoWindowPos: {
+        lat: 0,
+        lng: 0
+      },
+      infoWinOpen: false,
+      location: '',
+      photoURL: '',
+      currentMidx: null,
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      }
+    }
+  },
+  computed: {
+    markers () {
+      return this.$store.getters.loadedMarkers
+    },
+    user () {
+      return this.$store.getters.user
+    }
+  },
+  created () {
+    // this.getLocation()
+    this.$store.dispatch('getLocation')
+    .then((result) => {
+      this.location = this.$store.getters.location
+    })
+  },
+  methods: {
+    getLocation: function () {
+      if (!navigator.geolocation) {
+        window.alert('No geo-location')
+      }
+      navigator.geolocation.getCurrentPosition((position) => {
          // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
-         this.location = {lat: position.coords.latitude, lng: position.coords.longitude}
-         return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
-       }, (error) => {
-         window.alert('FAILED Error #' + error.code + ' ' + error.message)
-       }, {
-         timeout: 1000,
-         enableHighAccuracy: true
-       })
-     },
-     takePicture: function () {
-       if (!navigator.camera) {
-         window.alert('cordova.camera not found !')
-         return
-       }
-       navigator.camera.getPicture((imageURI) => {
+        this.location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
+      }, (error) => {
+        window.alert('FAILED Error #' + error.code + ' ' + error.message)
+      }, {
+        timeout: 1000,
+        enableHighAccuracy: true
+      })
+    },
+    takePicture: function () {
+      if (!navigator.camera) {
+        window.alert('cordova.camera not found !')
+        return
+      }
+      navigator.camera.getPicture((imageURI) => {
          // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
-         this.photoURL = imageURI
-         let timeTaken = new Date().toLocaleString()
-         const markerData = {
-           userId: this.user.uid,
-           image: imageURI.split('/').pop(),
-           dateTime: timeTaken,
-           location: {
-             lat: this.location.lat,
-             lng: this.location.lng
-           }
-         }
+        this.photoURL = imageURI
+        let timeTaken = new Date().toLocaleString()
+        const markerData = {
+          userId: this.user.uid,
+          image: imageURI.split('/').pop(),
+          dateTime: timeTaken,
+          location: {
+            lat: this.location.lat,
+            lng: this.location.lng
+          }
+        }
          // window.alert(JSON.stringify(markerData))
-         this.$store.dispatch('createMarker', markerData)
-       }, (message) => {
-         window.alert('FAILED : ' + message)
-       }, {
-         quality: 50,
-         destinationType: navigator.camera.DestinationType.FILE_URI
-       })
-     },
-     toggleInfoWindow: function (marker, idx) {
-       this.infoWindowPos = marker.position
-       this.infoContent = marker.sender
+        this.$store.dispatch('createMarker', markerData)
+      }, (message) => {
+        window.alert('FAILED : ' + message)
+      }, {
+        quality: 50,
+        destinationType: navigator.camera.DestinationType.FILE_URI
+      })
+    },
+    toggleInfoWindow: function (marker, idx) {
+      this.infoWindowPos = marker.position
+      this.infoContent = marker.sender
       // check if its the same marker that was selected if yes toggle
-       if (this.currentMidx === idx) {
-         this.infoWinOpen = !this.infoWinOpen
+      if (this.currentMidx === idx) {
+        this.infoWinOpen = !this.infoWinOpen
       // if different marker set infowindow to open and reset current marker index
-       }
-       else {
-         this.infoWinOpen = true
-         this.currentMidx = idx
-       }
-     }
-   }
+      }
+      else {
+        this.infoWinOpen = true
+        this.currentMidx = idx
+      }
+    }
+  }
 }
 </script>
 

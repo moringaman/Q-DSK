@@ -10,6 +10,7 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     center: {lat: 54.0, lng: -1.6},
+    location: '',
     loadedMarkers: [
       {
         sender: 'John Smith',
@@ -43,6 +44,9 @@ export const store = new Vuex.Store({
     loggedIn: false
   },
   mutations: {
+    setLocation (state, payload) {
+      state.location = payload
+    },
     createMarker (state, payload) {
       state.loadedMarkers.push()
     },
@@ -66,6 +70,21 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    getLocation ({commit}, payload) {
+      if (!navigator.geolocation) {
+        window.alert('No geo-location')
+      }
+      navigator.geolocation.getCurrentPosition((position) => {
+         // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
+        let location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        commit('setLocation', location)
+      }, (error) => {
+        window.alert('FAILED Error #' + error.code + ' ' + error.message)
+      }, {
+        timeout: 1000,
+        enableHighAccuracy: true
+      })
+    },
     createMarker ({commit}, payload) {
       // window.alert(JSON.stringify(payload))
       Loading.show(
@@ -206,6 +225,9 @@ export const store = new Vuex.Store({
     }
   },
   getters: {
+    location (state) {
+      return state.location
+    },
     loadedMarkers (state) {
       return state.loadedMarkers
     },
