@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
-import Randomstring from 'randomstring'
+// import Randomstring from 'randomstring'
+import MyUid from '../components/uid.js'
 // import Axios from 'axios'
 
 Vue.use(Vuex)
@@ -92,7 +93,8 @@ export const store = new Vuex.Store({
           message: 'Posting Data'
         }
       )
-      let markerId = Randomstring.generate()
+      // let markerId = Randomstring.generate()
+      let markerId = MyUid()
       firebase.database().ref('markers/' + markerId).set(payload)
       .then((data) => {
         commit('createMarker', payload)
