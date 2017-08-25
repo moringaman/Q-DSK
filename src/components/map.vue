@@ -78,14 +78,14 @@ export default {
     }
   },
   created () {
-    // this.getLocation()
-    this.$store.dispatch('getLocation')
+    this.getLocation()
+    /* this.$store.dispatch('getLocation')
     .then((result) => {
       this.location = this.$store.getters.location
-    })
+    }) */
   },
   methods: {
-  /*  getLocation: function () {
+    getLocation: function () {
       if (!navigator.geolocation) {
         window.alert('No geo-location')
       }
@@ -99,7 +99,7 @@ export default {
         timeout: 1000,
         enableHighAccuracy: true
       })
-    },
+    }, /*
     takePicture: function () {
       if (!navigator.camera) {
         window.alert('cordova.camera not found !')

@@ -1,22 +1,17 @@
 <template lang="html">
-    <q-fixed-position name="newmenu" corner="bottom-right" :offset="[16, 16]">
-          <q-btn color="tertiary">
-            <q-icon name="plus_one" />
-            <q-popover ref="popover4">
-            <div class="group" style="width: 220px; text-align: center;">
-                <q-btn flat color="primary" @click="takePicture(), $refs.popover4.close()">
-                  <q-icon name="add_a_photo" />
-                </q-btn>
-                <q-btn flat color="primary">
-                  <q-icon name="thumb_down" />
-                </q-btn>
-                <q-btn flat color="secondary">
-                  <q-icon name="share" />
-                </q-btn>
+  <button class="teal fixed-bottom-right" style="bottom: 10px; right: 16px;">
+        <i>add_a_photo</i>
+        <q-popover ref="popover4">
+          <div class="group" style="width: 200px; height: 50px; text-align: center;">
+            <button class="primary clear" @click="takePicture(), $refs.popover4.close()">
+              <i>add_a_photo</i>
+            </button>
+            <button class="primary clear" @click="photoUpload(), $refs.popver4.close()">
+              <i>thumb_down</i>
+            </button>
           </div>
-            </q-popover>
-          </q-btn>
-        </q-fixed-position>
+        </q-popover>
+      </button>
     <!-- <button id="takePicture" @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
 </template>
 
@@ -26,7 +21,9 @@ export default {
 
   data () {
     return {
-      photoURL: ''
+      photoURL: '',
+      photo: '',
+      path: ''
     }
   },
   methods: {
@@ -38,10 +35,13 @@ export default {
       navigator.camera.getPicture((imageURI) => {
         // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
         this.photoURL = imageURI
+        this.photo = imageURI.split('/').pop()
+        this.path = imageURI.split('/').pop().join('/')
+        console.log(this.photo + '' + this.path)
         let timeTaken = new Date().toLocaleString()
         const markerData = {
           userId: this.user.uid,
-          image: imageURI.split('/').pop(),
+          image: this.photo,
           dateTime: timeTaken,
           location: {
             lat: this.$store.getters.location.lat,
@@ -56,6 +56,9 @@ export default {
         quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI
       })
+    },
+    photoUpload: function () {
+      console.log(this.photo + '' + this.path)
     }
   },
   computed: {
