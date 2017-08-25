@@ -128,7 +128,7 @@ export const store = new Vuex.Store({
               createdMarkers: []
             }
             commit('setUser', newUser)
-            commit('loggedIn', true)
+            commit('setLoggedIn', true)
             store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)'})
           }
         )

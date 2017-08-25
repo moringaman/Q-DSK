@@ -4,7 +4,7 @@
     :center="{lat: location.lat, lng: location.lng}"
     :disableDefaultUI="true"
     :zoom="6"
-    style="width: 100%; height: 90vh; z-index: 0">
+    style="width: 100%; height: 94vh; z-index: 0">
     <gmap-info-window
      :options="infoOptions"
      :position="infoWindowPos"
@@ -22,20 +22,27 @@
       @click="toggleInfoWindow(m,index)"
     ></gmap-marker>
     <div slot="visible">
-      <div style="bottom: 0; left: 0; right: 0; line-height: 50px; bottom: 10px; background-color: rgba(0,0,0, 0.5); color: white; position: absolute; z-index: 100; font-size: 20px">
+      <div style="bottom: 0;
+       left: 0;
+       right: 0;
+       line-height: 50px;
+       bottom: 10px;
+       background-color: rgba(0,0,0, 0.5);
+       color: white;
+       position: absolute;
+       z-index: 100;
+       font-size: 20px">
         {{statusText}}
         <app-createnew></app-createnew>
-        <!-- <button @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
       </div>
     </div>
   </gmap-map>
-
 </q-layout>
 
 </template>
 
 <script>
-import CreateNewMarker from '../components/create-marker.vue'
+import CreateNewMarker from '../components/CreateMarker.vue'
  // import Vue from 'vue'
 export default {
   components: {
@@ -78,7 +85,7 @@ export default {
     })
   },
   methods: {
-    getLocation: function () {
+  /*  getLocation: function () {
       if (!navigator.geolocation) {
         window.alert('No geo-location')
       }
@@ -119,7 +126,7 @@ export default {
         quality: 50,
         destinationType: navigator.camera.DestinationType.FILE_URI
       })
-    },
+    }, */
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos = marker.position
       this.infoContent = marker.sender

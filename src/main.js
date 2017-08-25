@@ -7,14 +7,21 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 // ==============================
 
 import Vue from 'vue'
-import Quasar from 'quasar'
+import Quasar, { QBtn, QPopover, QIcon, QFixedPosition } from 'quasar'
 import router from './router'
 import { store } from './store'
 import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-Vue.use(Quasar) // Install Quasar Framework
+Vue.use(Quasar, {
+  components: {
+    QBtn,
+    QPopover,
+    QIcon,
+    QFixedPosition
+  }
+}) // Install Quasar Framework
 
 Vue.use(VueGoogleMaps, {
   load: {

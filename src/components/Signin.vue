@@ -30,8 +30,13 @@ export default {
     }
   },
   created () {
+    // Set fullscreen mode
     AppFullscreen.isActive(true)
-    // AppFullscreen.request()
+   // Get Current location
+    this.$store.dispatch('getLocation')
+   .then((result) => {
+     this.location = this.$store.getters.location
+   })
   },
   computed: {
   },
