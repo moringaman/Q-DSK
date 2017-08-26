@@ -36,8 +36,9 @@ export default {
       }
       navigator.camera.getPicture((imageURI) => {
         this.photoURL = imageURI
+        window.alert(imageURI)
         this.photo = imageURI.split('/').pop()
-        var filepath = imageURI.split('/')
+        var filepath = imageURI.split('/').splice(2)
         filepath.pop()
         filepath = filepath.join('/')
         this.path = filepath + '/'
