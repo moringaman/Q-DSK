@@ -50,6 +50,7 @@ Quasar.start(() => {
           this.$store.commit('setLoggedIn', false)
         }
       })
+      this.$store.dispatch('getLocation')
     },
     el: '#q-app',
     store,

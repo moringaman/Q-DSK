@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
 // import Randomstring from 'randomstring'
-import MyUid from '../components/uid.js'
+import MyUid from '../helpers/uid.js'
 // import Axios from 'axios'
 
 Vue.use(Vuex)
