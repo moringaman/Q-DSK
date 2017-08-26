@@ -40,38 +40,7 @@ export default {
         var filepath = imageURI.split('/')
         filepath.pop()
         filepath = filepath.join('/')
-        this.path = filepath
-        // window.alert(this.path)
-        // upload the file
-        /* cordova.file.readAsArrayBuffer(this.path, this.photo)
-          .then(function (success) {
-              // success
-            window.alert(success)
-            var blob = new Blob([success], {type: 'file/jpg'})
-            window.alert(blob)
-          })
-          .catch((error) => {
-            window.alert(error)
-          })
-           var uploadTask = firebase.storageRef.child('images/' + this.photo).put(blob)
-            uploadTask.on('state_changed', function (snapshot) {
-              // Observe state change events such as progress, pause, and resume
-              // See below for more detail
-              var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-              console.log('Upload is ' + progress + '% done')
-            }, function (error) {
-              // Handle unsuccessful uploads
-              window.alert('Error uploading: ' + error)
-            }, function () {
-              // Handle successful uploads on complete
-              // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-              var downloadURL = uploadTask.snapshot.downloadURL
-              window.alert('Success!', downloadURL)
-            })
-          }, function (error) {
-              // error
-            window.alert('Failed to read video file from directory', error.code)
-          }) */
+        this.path = filepath + '/'
         let timeTaken = new Date().toLocaleString()
         const markerData = {
           userId: this.user.uid,
