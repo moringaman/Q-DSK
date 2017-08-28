@@ -82,7 +82,7 @@ export const store = new Vuex.Store({
       }, (error) => {
         window.alert('FAILED Error #' + error.code + ' ' + error.message)
       }, {
-        timeout: 1000,
+        timeout: 3000,
         enableHighAccuracy: true
       })
     },
