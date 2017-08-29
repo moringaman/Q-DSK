@@ -7,7 +7,7 @@
             <button class="primary clear" @click="takePicture(), $refs.popover4.close()">
               <i>add_a_photo</i>
             </button>
-            <button class="primary clear" @click="photoUpload(), $refs.popover4.close()">
+            <button class="primary clear" @click="upload(), $refs.popover4.close()">
               <i>thumb_down</i>
             </button>
           </div>
@@ -66,42 +66,39 @@ export default {
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
-        quality: 50,
+        quality: 25,
+        targetWidth: 200,
+        targetHeight: 200,
         destinationType: navigator.camera.DestinationType.FILE_URI
       })
     },
     photoUpload: function () {
       // window.alert('uploading photo' + this.photo + 'from ' + cordova.file.applicationStorageDirectory)
-      var file = this.photoURL
+      // var file = this.photoURL
       // var reader = new FileReader()
-      // reader.readAsArrayBuffer(file)
+      // var myFile = reader.readAsArrayBuffer(file)
         // .then(function (success) {
         //  window.alert(success)
-      var blob = new Blob([file], {type: 'image/jpeg'})
-      setTimeout(this.upload(blob), 5000)
+      // var blob = new Blob([file], {type: 'image/jpg'})
+      // setTimeout(() => { this.upload(blob) }, 5000)
       // }, function (error) {
       //    window.alert(error)
       // })
     },
-    upload: function (blob) {
-      // var blob = new Blob([file], {type: 'image/jpeg'})
+    upload: function () {
+      var file = this.photoURL
+      var blob = new Blob([file], {type: 'image/jpg'})
       let storage = firebase.storage()
       let storageRef = storage.ref()
       let filesRef = storageRef.child('images/' + this.photo)
-      var uploadTask = filesRef.put(blob)
+      filesRef.put(blob, {contentType: 'image/jpg'})
         .then((snapshot) => {
           window.alert('Uploaded a blob or file!')
+          var downloadURL = snapshot.downloadURL
+          window.alert(downloadURL)
         }).catch((error) => {
           window.alert(error)
         })
-      uploadTask.on('state_changed', function (snapshot) {
-        window.alert(snapshot)
-      }, function (error) {
-        window.alert(error)
-      }, function () {
-        var downloadURL = uploadTask.snapshot.downloadURL
-        window.alert(downloadURL)
-      })
     }
   },
   computed: {
