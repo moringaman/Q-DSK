@@ -83,11 +83,8 @@ export default {
       img.onload = function () {
         c.width = this.naturalWidth     // update canvas size to match image
         c.height = this.naturalHeight
-        window.alert(img.src)
         ctx.drawImage(this, 0, 0)
-        window.alert('image created')
         var dataURL = c.toDataURL('image/jpeg', 0.75)
-        window.alert(dataURL + filesRef)
         filesRef.putString(dataURL, 'data_url')
         .then((snapshot) => {
           window.alert('Uploaded a blob or file!')
