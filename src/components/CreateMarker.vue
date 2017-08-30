@@ -7,7 +7,7 @@
             <button class="primary clear" @click="takePicture(), $refs.popover4.close()">
               <i>add_a_photo</i>
             </button>
-            <button class="primary clear" @click="upload(), $refs.popover4.close()">
+            <button class="primary clear" @click="photoUpload(), $refs.popover4.close()">
               <i>thumb_down</i>
             </button>
           </div>
@@ -73,17 +73,32 @@ export default {
       })
     },
     photoUpload: function () {
-      // window.alert('uploading photo' + this.photo + 'from ' + cordova.file.applicationStorageDirectory)
-      // var file = this.photoURL
-      // var reader = new FileReader()
-      // var myFile = reader.readAsArrayBuffer(file)
-        // .then(function (success) {
-        //  window.alert(success)
-      // var blob = new Blob([file], {type: 'image/jpg'})
-      // setTimeout(() => { this.upload(blob) }, 5000)
-      // }, function (error) {
-      //    window.alert(error)
-      // })
+      var img = new Image()
+      var c = document.createElement('canvas')
+      var ctx = c.getContext('2d')
+      let storage = firebase.storage()
+      let storageRef = storage.ref()
+      let filesRef = storageRef.child('images/' + this.photo)
+      // window.alert(img.src)
+      img.onload = function () {
+        c.width = this.naturalWidth     // update canvas size to match image
+        c.height = this.naturalHeight
+        window.alert(img.src)
+        ctx.drawImage(this, 0, 0)
+        window.alert('image created')
+        var dataURL = c.toDataURL('image/jpeg', 0.75)
+        window.alert(dataURL + filesRef)
+        filesRef.putString(dataURL, 'data_url')
+        .then((snapshot) => {
+          window.alert('Uploaded a blob or file!')
+          var downloadURL = snapshot.downloadURL
+          window.alert(downloadURL)
+        }).catch((error) => {
+          window.alert(error)
+        })
+      }
+      img.crossOrigin = ''             // if from different origin
+      img.src = this.photoURL
     },
     upload: function () {
       var file = this.photoURL
