@@ -66,9 +66,9 @@ export default {
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
-        quality: 25,
-        targetWidth: 200,
-        targetHeight: 200,
+        quality: 75,
+        targetWidth: 500,
+        targetHeight: 500,
         destinationType: navigator.camera.DestinationType.FILE_URI
       })
     },
@@ -78,7 +78,7 @@ export default {
       var ctx = c.getContext('2d')
       let storage = firebase.storage()
       let storageRef = storage.ref()
-      let filesRef = storageRef.child('images/' + this.photo)
+      let filesRef = storageRef.child('images/' + this.markerId + '.jpg')
       // window.alert(img.src)
       img.onload = function () {
         c.width = this.naturalWidth     // update canvas size to match image
@@ -96,26 +96,14 @@ export default {
       }
       img.crossOrigin = ''             // if from different origin
       img.src = this.photoURL
-    },
-    upload: function () {
-      var file = this.photoURL
-      var blob = new Blob([file], {type: 'image/jpg'})
-      let storage = firebase.storage()
-      let storageRef = storage.ref()
-      let filesRef = storageRef.child('images/' + this.photo)
-      filesRef.put(blob, {contentType: 'image/jpg'})
-        .then((snapshot) => {
-          window.alert('Uploaded a blob or file!')
-          var downloadURL = snapshot.downloadURL
-          window.alert(downloadURL)
-        }).catch((error) => {
-          window.alert(error)
-        })
     }
   },
   computed: {
     user () {
       return this.$store.getters.user
+    },
+    markerId () {
+      return this.$store.getters.markerId
     }
   }
 }

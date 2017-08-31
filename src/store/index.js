@@ -40,6 +40,7 @@ export const store = new Vuex.Store({
     ],
     user: null,
     avatar: null,
+    markerId: null,
     loading: false,
     error: null,
     loggedIn: false
@@ -68,6 +69,9 @@ export const store = new Vuex.Store({
     },
     setLoggedIn (state, payload) {
       state.loggedIn = payload
+    },
+    setMarkerId (state, payload) {
+      state.markerId = payload
     }
   },
   actions: {
@@ -98,6 +102,7 @@ export const store = new Vuex.Store({
       firebase.database().ref('markers/' + markerId).set(payload)
       .then((data) => {
         commit('createMarker', payload)
+        commit('setMarkerId', markerId)
         Loading.hide()
         store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
       })
@@ -244,6 +249,9 @@ export const store = new Vuex.Store({
     },
     signedIn (state) {
       return state.loggedIn
+    },
+    markerId (state) {
+      return state.markerId
     }
   }
 })
