@@ -26,6 +26,7 @@
 <script>
 import FilePath from '../helpers/filepath.js'
 import * as firebase from 'firebase'
+import { Loading, Dialogue } from 'quasar'
 export default {
 
   data () {
@@ -51,18 +52,30 @@ export default {
         filepath.pop()
         filepath = filepath.join('/')
         this.path = filepath + '/'
-        let timeTaken = new Date().toLocaleString()
-        const markerData = {
-          userId: this.user.uid,
-          image: this.photo,
-          dateTime: timeTaken,
-          location: {
-            lat: this.$store.getters.location.lat,
-            lng: this.$store.getters.location.lng
+        Dialog.create({
+          title: 'Confirmation',
+          message: 'Do you want to send this',
+          buttons: [
+            'Cancel',
+            {
+              label: 'Empty Trash Bin',
+              handler () {
+        // "this" refers to the scope of this method only,
+        // not your Vue component
+        // prints: undefined
+        // console.log(this.variable)
+            }
+          },
+          'Send',
+          {
+            Label: 'Process Marker',
+            handler () {
+              
+            }
           }
-        }
-        // window.alert(JSON.stringify(markerData))
-        this.$store.dispatch('createMarker', markerData)
+
+         ]
+      })
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
@@ -71,6 +84,21 @@ export default {
         targetHeight: 500,
         destinationType: navigator.camera.DestinationType.FILE_URI
       })
+    },
+    markerCreate: function () {
+      let timeTaken = new Date().toLocaleString()
+      const markerData = {
+        userId: this.user.uid,
+        image: this.photo,
+        photoUrl: this.photoURL,
+        dateTime: timeTaken,
+        location: {
+          lat: this.$store.getters.location.lat,
+          lng: this.$store.getters.location.lng
+        }
+      }
+      // window.alert(JSON.stringify(markerData))
+      this.$store.dispatch('createMarker', markerData)
     },
     photoUpload: function () {
       var img = new Image()
@@ -85,6 +113,11 @@ export default {
         c.height = this.naturalHeight
         ctx.drawImage(this, 0, 0)
         var dataURL = c.toDataURL('image/jpeg', 0.75)
+        Loading.show(
+          {
+            message: 'Posting Photo'
+          }
+        )
         filesRef.putString(dataURL, 'data_url')
         .then((snapshot) => {
           window.alert('Uploaded a blob or file!')

@@ -103,6 +103,7 @@ export const store = new Vuex.Store({
       .then((data) => {
         commit('createMarker', payload)
         commit('setMarkerId', markerId)
+        store.dispatch('photoUpload', payload.photoUrl)
         Loading.hide()
         store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
       })
@@ -113,6 +114,36 @@ export const store = new Vuex.Store({
     },
     loadMarkers ({commit}, payload) {
       // TODO query firebase for markers and push to state markers object
+    },
+    photoUpload ({dispatch}, payload) {
+      var img = new Image()
+      var c = document.createElement('canvas')
+      var ctx = c.getContext('2d')
+      let storage = firebase.storage()
+      let storageRef = storage.ref()
+      let filesRef = storageRef.child('markers/' + store.markerId + '.jpg')
+      // window.alert(img.src)
+      img.onload = function () {
+        c.width = this.naturalWidth     // update canvas size to match image
+        c.height = this.naturalHeight
+        ctx.drawImage(this, 0, 0)
+        var dataURL = c.toDataURL('image/jpeg', 0.75)
+        Loading.show(
+          {
+            message: 'Posting Photo'
+          }
+        )
+        filesRef.putString(dataURL, 'data_url')
+        .then((snapshot) => {
+          window.alert('Uploaded a blob or file!')
+          var downloadURL = snapshot.downloadURL
+          window.alert(downloadURL)
+        }).catch((error) => {
+          window.alert(error)
+        })
+      }
+      img.crossOrigin = ''             // if from different origin
+      img.src = payload.photoUrl
     },
     signUserIn ({commit}, payload) {
       Loading.show(
