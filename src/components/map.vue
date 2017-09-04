@@ -9,7 +9,7 @@
      :options="infoOptions"
      :position="infoWindowPos"
      :opened="infoWinOpen"
-     @closeclick="infoWinOpen=false"> {{ infoContent }}
+     @closeclick="infoWinOpen=false"> <strong>{{ infoContent }}</strong>
     </gmap-info-window>
     <gmap-marker
       :key="index"

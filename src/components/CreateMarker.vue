@@ -7,26 +7,30 @@
             <button class="primary clear" @click="takePicture(), $refs.popover4.close()">
               <i>add_a_photo</i>
             </button>
-            <button class="primary clear" @click="photoUpload(), $refs.popover4.close()">
+            <button class="primary clear" @click="showModal(), $refs.popover4.close()">
               <i>thumb_down</i>
             </button>
           </div>
         </q-popover>
       </button>
     <!-- <button id="takePicture" @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
-    <img v-show="photoURL"
-    style="width: 200px;
-     height: 200px;
-     position: absolute;
-     bottom: 200px; left: 100px;
-     border-radius: 50%" :src="photoURL"/>
+
+     <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
+      <h4>Lets do this!</h4><p>Want to post this picture?</p>
+      <img v-show="photoURL"
+      style="width: 200px;
+      border-radius: 15%"
+       :src="photoURL"/>
+      <button class="primary" @click="markerCreate()">Post Image</button>
+      <button class="tertiary" @click="$refs.maximizedModal.close()">Try Again</button>
+    </q-modal>
   </div>
 </template>
 
 <script>
 import FilePath from '../helpers/filepath.js'
-import * as firebase from 'firebase'
-import { Loading, Dialog } from 'quasar'
+// import * as firebase from 'firebase'
+// import { Loading } from 'quasar'
 export default {
 
   data () {
@@ -52,28 +56,24 @@ export default {
         filepath.pop()
         filepath = filepath.join('/')
         this.path = filepath + '/'
-        Dialog.create({
+        this.$refs.maximizedModal.open()
+        /* Dialog.create({
           title: 'Confirmation',
           message: 'Do you want to send this',
           buttons: [
-            'Cancel',
             {
-              label: 'Empty Trash Bin',
-              handler () {
-        // "this" refers to the scope of this method only,
-        // not your Vue component
-        // prints: undefined
-        // console.log(this.variable)
+              label: 'Cancel',
+              handler: () => {
               }
             },
-            'Send',
             {
-              Label: 'Process Marker',
-              handler () {
+              label: 'Agree',
+              handler: () => {
+                this.markerCreate()
               }
             }
           ]
-        })
+        }) */
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
@@ -84,6 +84,7 @@ export default {
       })
     },
     markerCreate: function () {
+      this.$refs.maximizedModal.close()
       let timeTaken = new Date().toLocaleString()
       const markerData = {
         userId: this.user.uid,
@@ -97,8 +98,8 @@ export default {
       }
       // window.alert(JSON.stringify(markerData))
       this.$store.dispatch('createMarker', markerData)
-    },
-    photoUpload: function () {
+    }
+    /* photoUpload: function () {
       var img = new Image()
       var c = document.createElement('canvas')
       var ctx = c.getContext('2d')
@@ -127,7 +128,7 @@ export default {
       }
       img.crossOrigin = ''             // if from different origin
       img.src = this.photoURL
-    }
+    }, */
   },
   computed: {
     user () {
