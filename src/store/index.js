@@ -236,7 +236,8 @@ export const store = new Vuex.Store({
             firebase.database()
             .ref('users/' + newUser.id).set(
               {
-                email: payload.email
+                email: payload.email,
+                username: payload.username
               }
             ).then((user) => {
               commit('loggedIn', true)

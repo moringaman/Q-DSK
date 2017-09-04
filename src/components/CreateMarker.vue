@@ -26,7 +26,7 @@
 <script>
 import FilePath from '../helpers/filepath.js'
 import * as firebase from 'firebase'
-import { Loading, Dialogue } from 'quasar'
+import { Loading, Dialog } from 'quasar'
 export default {
 
   data () {
@@ -64,18 +64,16 @@ export default {
         // not your Vue component
         // prints: undefined
         // console.log(this.variable)
+              }
+            },
+            'Send',
+            {
+              Label: 'Process Marker',
+              handler () {
+              }
             }
-          },
-          'Send',
-          {
-            Label: 'Process Marker',
-            handler () {
-              
-            }
-          }
-
-         ]
-      })
+          ]
+        })
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {

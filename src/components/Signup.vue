@@ -1,9 +1,13 @@
 <template>
   <q-layout>
   <div class="layout-view">
+    <h4>Sign Up</h4>
     <div class="layout-padding form">
-      <h4>Sign Up Today!</h4>
    <!-- <img src="../assets/DarkSkies_Logo.png"> -->
+   <div class="floating-label">
+     <input required :class="{'has-error':!email == '' && !isValid}" v-model="userName" class="full-width">
+     <label><i class="material-icons">email</i>Usernamel</label>
+   </div>
         <div class="floating-label">
           <input required :class="{'has-error':!email == '' && !isValid}" v-model="email" class="full-width">
           <label><i class="material-icons">email</i>Your email</label>
@@ -34,6 +38,7 @@ export default {
   data () {
     return {
       email: '',
+      userName: '',
       password: '',
       passwordComf: '',
       loggedIn: false
@@ -82,7 +87,7 @@ export default {
   methods: {
     signUp () {
           // TODO login to firebase then redirect to app page
-      this.$store.dispatch('signUserUp', {email: this.email, password: this.password})
+      this.$store.dispatch('signUserUp', {email: this.email, username: this.userName, password: this.password})
       // setTimeout(this.createUserProfile, 2000)
     }
   }
