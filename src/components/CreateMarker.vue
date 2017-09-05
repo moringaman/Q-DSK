@@ -1,6 +1,6 @@
 <template lang="html">
 <div>
-  <button class="teal fixed-bottom-right" style="bottom: 50px; right: 80%;">
+  <!-- <button class="teal fixed-bottom-right" style="bottom: 50px; right: 80%;">
         <i>add_a_photo</i>
         <q-popover ref="popover4">
           <div class="group" style="width: 200px; height: 50px; text-align: center;">
@@ -12,7 +12,24 @@
             </button>
           </div>
         </q-popover>
-      </button>
+      </button> -->
+      <q-fab
+      style="position:absolute;
+      bottom: 50px;"
+      classNames="red"
+      icon="keyboard_arrow_right"
+      direction="right">
+        <q-small-fab
+          class="blue"
+          @click.native="someMethod()"
+          icon="mail">
+        </q-small-fab>
+        <q-small-fab
+          class="green"
+          @click.native="takePicture()"
+          icon="add_a_photo">
+        </q-small-fab>
+</q-fab>
     <!-- <button id="takePicture" @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
 
      <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
