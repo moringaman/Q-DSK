@@ -1,19 +1,6 @@
 <template lang="html">
 <div>
-  <!-- <button class="teal fixed-bottom-right" style="bottom: 50px; right: 80%;">
-        <i>add_a_photo</i>
-        <q-popover ref="popover4">
-          <div class="group" style="width: 200px; height: 50px; text-align: center;">
-            <button class="primary clear" @click="takePicture(), $refs.popover4.close()">
-              <i>add_a_photo</i>
-            </button>
-            <button class="primary clear" @click="showModal(), $refs.popover4.close()">
-              <i>thumb_down</i>
-            </button>
-          </div>
-        </q-popover>
-      </button> -->
-      <q-fab
+    <q-fab
       style="position:absolute;
       bottom: 50px;"
       classNames="red"
@@ -29,9 +16,7 @@
           @click.native="takePicture()"
           icon="add_a_photo">
         </q-small-fab>
-</q-fab>
-    <!-- <button id="takePicture" @click='takePicture()' big fill><i class="btn-icon">add_a_photo</i></button> -->
-
+    </q-fab>
      <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
       <h4>Lets do this!</h4><p>Want to post this picture?</p>
       <img v-show="photoURL"
@@ -74,23 +59,6 @@ export default {
         filepath = filepath.join('/')
         this.path = filepath + '/'
         this.$refs.maximizedModal.open()
-        /* Dialog.create({
-          title: 'Confirmation',
-          message: 'Do you want to send this',
-          buttons: [
-            {
-              label: 'Cancel',
-              handler: () => {
-              }
-            },
-            {
-              label: 'Agree',
-              handler: () => {
-                this.markerCreate()
-              }
-            }
-          ]
-        }) */
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
@@ -116,36 +84,6 @@ export default {
       // window.alert(JSON.stringify(markerData))
       this.$store.dispatch('createMarker', markerData)
     }
-    /* photoUpload: function () {
-      var img = new Image()
-      var c = document.createElement('canvas')
-      var ctx = c.getContext('2d')
-      let storage = firebase.storage()
-      let storageRef = storage.ref()
-      let filesRef = storageRef.child('images/' + this.markerId + '.jpg')
-      // window.alert(img.src)
-      img.onload = function () {
-        c.width = this.naturalWidth     // update canvas size to match image
-        c.height = this.naturalHeight
-        ctx.drawImage(this, 0, 0)
-        var dataURL = c.toDataURL('image/jpeg', 0.75)
-        Loading.show(
-          {
-            message: 'Posting Photo'
-          }
-        )
-        filesRef.putString(dataURL, 'data_url')
-        .then((snapshot) => {
-          window.alert('Uploaded a blob or file!')
-          var downloadURL = snapshot.downloadURL
-          window.alert(downloadURL)
-        }).catch((error) => {
-          window.alert(error)
-        })
-      }
-      img.crossOrigin = ''             // if from different origin
-      img.src = this.photoURL
-    }, */
   },
   computed: {
     user () {

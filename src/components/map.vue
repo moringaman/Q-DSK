@@ -99,34 +99,7 @@ export default {
         timeout: 1000,
         enableHighAccuracy: true
       })
-    }, /*
-    takePicture: function () {
-      if (!navigator.camera) {
-        window.alert('cordova.camera not found !')
-        return
-      }
-      navigator.camera.getPicture((imageURI) => {
-         // window.alert('Photo URI : ' + imageURI + '' + this.location.lat)
-        this.photoURL = imageURI
-        let timeTaken = new Date().toLocaleString()
-        const markerData = {
-          userId: this.user.uid,
-          image: imageURI.split('/').pop(),
-          dateTime: timeTaken,
-          location: {
-            lat: this.location.lat,
-            lng: this.location.lng
-          }
-        }
-         // window.alert(JSON.stringify(markerData))
-        this.$store.dispatch('createMarker', markerData)
-      }, (message) => {
-        window.alert('FAILED : ' + message)
-      }, {
-        quality: 50,
-        destinationType: navigator.camera.DestinationType.FILE_URI
-      })
-    }, */
+    },
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos = marker.position
       this.infoContent = marker.sender
