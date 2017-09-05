@@ -8,8 +8,8 @@
       direction="right">
         <q-small-fab
           class="blue"
-          @click.native="someMethod()"
-          icon="mail">
+          @click.native="showModal()"
+          icon="collections">
         </q-small-fab>
         <q-small-fab
           class="green"
@@ -18,12 +18,20 @@
         </q-small-fab>
     </q-fab>
      <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
-      <h4>Lets do this!</h4><p>Want to post this picture?</p>
-      <img v-show="photoURL"
-      style="width: 200px;
-      border-radius: 15%"
-       :src="photoURL"/>
-      <button class="primary" @click="markerCreate()">Post Image</button>
+       <div class="card">
+  <div class="card-title bg-primary text-white" icon="mood">
+    <i>mood</i>Way to Go, You're a Legend!
+  </div>
+  <div class="card-content card-force-top-padding">
+    <p>Please give some more details about your sky picture before posting</p>
+    <img :src="photoURL"/>
+    <div class="floating-label">
+  <textarea required class="full-width" v-model="photoDesc"></textarea>
+  <label>Description</label>
+</div>
+  </div>
+</div>
+      <button class="positive" @click="markerCreate()">Post Image</button>
       <button class="tertiary" @click="$refs.maximizedModal.close()">Try Again</button>
     </q-modal>
   </div>
@@ -39,7 +47,8 @@ export default {
     return {
       photoURL: '',
       photo: '',
-      path: ''
+      path: '',
+      photoDesc: ''
     }
   },
   mixins: [FilePath],
@@ -62,7 +71,7 @@ export default {
       }, (message) => {
         window.alert('FAILED : ' + message)
       }, {
-        quality: 75,
+        quality: 90,
         targetWidth: 500,
         targetHeight: 500,
         destinationType: navigator.camera.DestinationType.FILE_URI
@@ -75,6 +84,7 @@ export default {
         userId: this.user.uid,
         image: this.photo,
         photoUrl: this.photoURL,
+        photoDesc: this.photoDesc,
         dateTime: timeTaken,
         location: {
           lat: this.$store.getters.location.lat,
@@ -83,6 +93,9 @@ export default {
       }
       // window.alert(JSON.stringify(markerData))
       this.$store.dispatch('createMarker', markerData)
+    },
+    showModal: function () {
+      this.$refs.maximizedModal.open()
     }
   },
   computed: {
@@ -96,5 +109,17 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+
+img {
+  width: 300px;
+  height: 300px;
+  border-radius: 5%;
+  background-image: url(../assets/placeholder.png);
+}
+
+i {
+  font-size: 34px;
+  margin: -10px 10px;
+}
 </style>

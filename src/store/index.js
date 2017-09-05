@@ -84,7 +84,7 @@ export const store = new Vuex.Store({
         let location = {lat: position.coords.latitude, lng: position.coords.longitude}
         commit('setLocation', location)
       }, (error) => {
-        window.alert('FAILED Error #' + error.code + ' ' + error.message)
+        store.dispatch('showMessage', {message: error.message, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
       }, {
         timeout: 3000,
         enableHighAccuracy: true
@@ -107,7 +107,7 @@ export const store = new Vuex.Store({
       })
       .catch((error) => {
         Loading.hide()
-        store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
+        store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
       })
     },
     loadMarkers ({commit}, payload) {
@@ -135,7 +135,7 @@ export const store = new Vuex.Store({
         filesRef.putString(dataURL, 'data_url')
         .then((snapshot) => {
           Loading.hide()
-          store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)'})
+          store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
           // window.alert('Uploaded a blob or file!')
           // var downloadURL = snapshot.downloadURL
           // window.alert(downloadURL) ** USEFUL FOR USING IMAGE IN FUTURE
@@ -166,7 +166,7 @@ export const store = new Vuex.Store({
             }
             commit('setUser', newUser)
             commit('setLoggedIn', true)
-            store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)'})
+            store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
           }
         )
         .catch(
@@ -174,7 +174,7 @@ export const store = new Vuex.Store({
             commit('setLoading', false)
             Loading.hide()
             commit('setError', error)
-            store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
+            store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
             // alert(error)
           }
         )
