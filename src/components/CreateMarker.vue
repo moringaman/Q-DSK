@@ -20,7 +20,7 @@
      <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
        <div class="card">
   <div class="card-title bg-primary text-white" icon="mood">
-    <i>mood</i>Way to Go, You're a Legend!
+    <i>mood</i>Dude, You're a Legend!
   </div>
   <div class="card-content card-force-top-padding">
     <p>Please give some more details about your sky picture before posting</p>
@@ -112,14 +112,14 @@ export default {
 <style lang="css" scoped>
 
 img {
-  width: 300px;
-  height: 300px;
+  width: 76vw;
+  height: 35vh;
   border-radius: 5%;
   background-image: url(../assets/placeholder.png);
 }
 
 i {
-  font-size: 34px;
-  margin: -10px 10px;
+  font-size: 2em;
+  margin: -15px 2px;
 }
 </style>
