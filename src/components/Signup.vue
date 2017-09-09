@@ -5,8 +5,8 @@
     <div class="layout-padding form">
    <!-- <img src="../assets/DarkSkies_Logo.png"> -->
    <div class="floating-label">
-     <input required :class="{'has-error':!email == '' && !isValid}" v-model="userName" class="full-width">
-     <label><i class="material-icons">email</i>Usernamel</label>
+     <input required :class="{'has-error':!userName == '' && !userName}" v-model="userName" class="full-width">
+     <label><i class="material-icons">email</i>Username</label>
    </div>
         <div class="floating-label">
           <input required :class="{'has-error':!email == '' && !isValid}" v-model="email" class="full-width">
@@ -74,7 +74,7 @@ export default {
       return (this.password === this.passwordComf)
     }
   },
-  watch: {
+  /* watch: {
     loading (value) {
       if (value === true) {
         this.loading = true
@@ -83,7 +83,7 @@ export default {
         this.loading = false
       }
     }
-  },
+  }, */
   methods: {
     signUp () {
           // TODO login to firebase then redirect to app page

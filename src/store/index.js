@@ -241,7 +241,7 @@ export const store = new Vuex.Store({
                 username: payload.username
               }
             ).then((user) => {
-              commit('loggedIn', true)
+              commit('setLoggedIn', true)
               store.dispatch('showMessage', {message: 'Account Created', color: 'rgba(0,128,0, 0.6)'})
             }).catch((error) => {
               store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)'})
