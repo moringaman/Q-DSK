@@ -14,7 +14,7 @@
     <gmap-marker
       :key="index"
       v-for="(m, index) in markers"
-      :position="m.position"
+      :position="m.location"
       :clickable="true"
       :draggable="false"
       @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.timestamp + location.lat"
@@ -82,6 +82,8 @@ export default {
   },
   created () {
     this.getLocation()
+    this.$store.dispatch('loadMarkers')
+    console.log(this.markers)
   },
   watch: {
     currentUser: function (val) {
@@ -105,7 +107,7 @@ export default {
       })
     },
     toggleInfoWindow: function (marker, idx) {
-      this.infoWindowPos = marker.position
+      this.infoWindowPos = marker.location
       this.infoContent = marker.sender
       // check if its the same marker that was selected if yes toggle
       if (this.currentMidx === idx) {

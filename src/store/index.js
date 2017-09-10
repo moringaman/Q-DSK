@@ -17,29 +17,29 @@ export const store = new Vuex.Store({
         sender: 'John Smith',
         userId: 'iuyrewiudhiwedhwe',
         timestamp: '12:00:00',
-        position: {lat: 53.5, lng: -1.34}
+        location: {lat: 53.5, lng: -1.34}
       },
       {
         sender: 'Andre Jones',
         userId: 'dscbdshwidbioiaq',
         timestamp: '12:00:00',
-        position: {lat: 51.5, lng: -1.04}
+        location: {lat: 51.5, lng: -1.04}
       },
       {
         sender: 'Peter Davis',
         userId: 'duhhwiw9chbcosw0jk',
         timestamp: '12:00:00',
-        position: {lat: 50.5, lng: -1.36}
+        location: {lat: 50.5, lng: -1.36}
       },
       {
         sender: 'Susan Phillips ',
         userId: '43bjhfsd9h8fbskqwa',
         timestamp: '12:00:00',
-        position: {lat: 51.2, lng: -1.24}
+        location: {lat: 51.2, lng: -1.24}
       }
     ],
-    currentUser: {},
-    user: null,
+    currentUser: [],
+    user: [],
     avatar: null,
     markerId: null,
     loading: false,
@@ -51,7 +51,7 @@ export const store = new Vuex.Store({
       state.location = payload
     },
     createMarker (state, payload) {
-      state.loadedMarkers.push()
+      state.loadedMarkers.push(...payload)
     },
     setUser (state, payload) {
       state.user = payload
@@ -96,14 +96,25 @@ export const store = new Vuex.Store({
     },
     createMarker ({commit}, payload) {
       // window.alert(JSON.stringify(payload))
+      let markerId = MyUid()
+      let markerData = {
+        userId: payload.userId,
+        image: payload.image,
+        sender: payload.sender,
+        photoUrl: markerId + '.jpg',
+        photoDesc: payload.photoDesc,
+        dateTime: payload.dateTime,
+        location: {
+          lat: payload.lat,
+          lng: payload.lng
+        }
+      }
       Loading.show(
         {
           message: 'Posting Data'
         }
       )
-      // let markerId = Randomstring.generate()
-      let markerId = MyUid()
-      firebase.database().ref('markers/' + markerId).set(payload)
+      firebase.database().ref('markers/' + markerId).set(markerData)
       .then((data) => {
         commit('createMarker', payload)
         commit('setMarkerId', markerId)
@@ -116,6 +127,19 @@ export const store = new Vuex.Store({
     },
     loadMarkers ({commit}, payload) {
       // TODO query firebase for markers and push to state markers object
+      const db = firebase.database()
+      const ref = db.ref('markers')
+      ref.orderByKey().limitToFirst(1)
+      ref.on('value', snap => {
+        let keys = []
+        // console.log(snap.val())
+        snap.forEach(function (item) {
+          var itemVal = item.val()
+          keys.push(itemVal)
+        })
+        console.log(keys)
+        commit('createMarker', keys)
+      })
     },
     photoUpload ({dispatch}, payload) {
       // var id = store.markerId

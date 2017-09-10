@@ -83,6 +83,7 @@ export default {
       const markerData = {
         userId: this.user.uid,
         image: this.photo,
+        sender: this.currentUser.username,
         photoUrl: this.photoURL,
         photoDesc: this.photoDesc,
         dateTime: timeTaken,
@@ -104,6 +105,9 @@ export default {
     },
     markerId () {
       return this.$store.getters.markerId
+    },
+    currentUser () {
+      return this.$store.getters.currentUser
     }
   }
 }
