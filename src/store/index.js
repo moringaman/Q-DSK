@@ -99,17 +99,17 @@ export const store = new Vuex.Store({
       let markerId = MyUid()
       let mData = {
         userId: payload.userId,
-        image: payload.image,
+        image: markerId + '.jpg',
         sender: payload.sender,
-        photoUrl: markerId + '.jpg',
+        photoUrl: payload.photoUrl,
         photoDesc: payload.photoDesc,
         dateTime: payload.dateTime,
         location: {
-          lat: payload.lat,
-          lng: payload.lng
+          lat: payload.location.lat,
+          lng: payload.location.lng
         }
       }
-      window.alert(JSON.parse(mData))
+      // window.alert(JSON.stringify(mData))
       Loading.show(
         {
           message: 'Posting Data'
@@ -167,6 +167,7 @@ export const store = new Vuex.Store({
           store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
           // window.alert('Uploaded a blob or file!')
           // var downloadURL = snapshot.downloadURL
+          // TODO Push download URL onto last marker array element
           // window.alert(downloadURL) ** USEFUL FOR USING IMAGE IN FUTURE
         }).catch((error) => {
           window.alert(error)
