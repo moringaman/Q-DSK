@@ -166,8 +166,10 @@ export const store = new Vuex.Store({
           Loading.hide()
           store.dispatch('showMessage', {message: 'Marker Created', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
           // window.alert('Uploaded a blob or file!')
-          // var downloadURL = snapshot.downloadURL
+          var downloadURL = snapshot.downloadURL
           // TODO Push download URL onto last marker array element
+          var myObj = store.state.loadedMarkers.slice(-1)
+          myObj.downloadURL = downloadURL
           // window.alert(downloadURL) ** USEFUL FOR USING IMAGE IN FUTURE
         }).catch((error) => {
           window.alert(error)
@@ -330,6 +332,9 @@ export const store = new Vuex.Store({
     },
     currentUser (state) {
       return state.currentUser
+    },
+    lastMarker (state) {
+      return state.loadedMarkers.slice(-1)
     }
   }
 })

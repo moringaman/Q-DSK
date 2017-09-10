@@ -78,6 +78,9 @@ export default {
     },
     currentUser () {
       return this.$store.getters.currentUser
+    },
+    lastMarker () {
+      return this.$store.getters.lastMarker
     }
   },
   created () {
