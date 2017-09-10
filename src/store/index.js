@@ -97,7 +97,7 @@ export const store = new Vuex.Store({
     createMarker ({commit}, payload) {
       // window.alert(JSON.stringify(payload))
       let markerId = MyUid()
-      let markerData = {
+      let mData = {
         userId: payload.userId,
         image: payload.image,
         sender: payload.sender,
@@ -109,12 +109,13 @@ export const store = new Vuex.Store({
           lng: payload.lng
         }
       }
+      window.alert(JSON.parse(mData))
       Loading.show(
         {
           message: 'Posting Data'
         }
       )
-      firebase.database().ref('markers/' + markerId).set(markerData)
+      firebase.database().ref('markers/' + markerId).set(mData)
       .then((data) => {
         commit('createMarker', payload)
         commit('setMarkerId', markerId)
