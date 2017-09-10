@@ -75,14 +75,18 @@ export default {
     },
     user () {
       return this.$store.getters.user
+    },
+    currentUser () {
+      return this.$store.getters.currentUser
     }
   },
   created () {
     this.getLocation()
-    /* this.$store.dispatch('getLocation')
-    .then((result) => {
-      this.location = this.$store.getters.location
-    }) */
+  },
+  watch: {
+    currentUser: function (val) {
+      this.$store.dispatch('showMessage', {message: 'Welcome back, ' + val.username, color: 'rgba(0,128,0, 0.6)', icon: 'done'})
+    }
   },
   methods: {
     getLocation: function () {

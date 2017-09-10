@@ -38,6 +38,7 @@ export const store = new Vuex.Store({
         position: {lat: 51.2, lng: -1.24}
       }
     ],
+    currentUser: {},
     user: null,
     avatar: null,
     markerId: null,
@@ -72,6 +73,9 @@ export const store = new Vuex.Store({
     },
     setMarkerId (state, payload) {
       state.markerId = payload
+    },
+    setCurrentUser (state, payload) {
+      state.currentUser = payload
     }
   },
   actions: {
@@ -166,7 +170,8 @@ export const store = new Vuex.Store({
             }
             commit('setUser', newUser)
             commit('setLoggedIn', true)
-            store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
+            // store.dispatch('showMessage', {message: 'Welcome Back', color: 'rgba(0,128,0, 0.6)', icon: 'done'})
+            store.dispatch('loadCurrentUser', user.uid)
           }
         )
         .catch(
@@ -258,10 +263,21 @@ export const store = new Vuex.Store({
           }
         )
     },
+    loadCurrentUser ({dispatch}, payload) {
+      // let vm = this
+      var db = firebase.database()
+      var ref = db.ref('users')
+      ref.orderByKey().equalTo(payload).limitToFirst(10)
+      .on('value', snap => {
+        console.log(snap.val()[payload])
+        store.commit('setCurrentUser', snap.val()[payload])
+      })
+    },
     signOut ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
-      commit('loggedIn', false)
+      commit('setLoggedIn', false)
+      commit('setCurrentUser', null)
     }
   },
   getters: {
@@ -285,6 +301,9 @@ export const store = new Vuex.Store({
     },
     markerId (state) {
       return state.markerId
+    },
+    currentUser (state) {
+      return state.currentUser
     }
   }
 })
