@@ -171,7 +171,7 @@ export const store = new Vuex.Store({
         )
         .catch(
           error => {
-            commit('setLoading', false)
+            commit('setLoggedIn', false)
             Loading.hide()
             commit('setError', error)
             store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
