@@ -342,6 +342,16 @@ export const store = new Vuex.Store({
     },
     lastMarker (state) {
       return state.loadedMarkers.slice(-1)
+    },
+    userMarkers (state) {
+      var arr = state.loadedMarkers
+      var userArr = []
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].userId === state.user.uid) {
+          userArr.push(arr[i])
+        }
+      }
+      return userArr
     }
   }
 })

@@ -17,6 +17,7 @@
           icon="add_a_photo">
         </q-small-fab>
     </q-fab>
+    <!-- Modal for photo submission -->
      <q-modal ref="maximizedModal" class="maximized" :content-css="{padding: '20px'}">
        <div class="card">
   <div class="card-title bg-primary text-white" icon="mood">
@@ -34,11 +35,24 @@
       <button class="positive" @click="markerCreate()">Post Image</button>
       <button class="tertiary" @click="$refs.maximizedModal.close()">Try Again</button>
     </q-modal>
+    <!-- Modal for submission history -->
+    <q-modal ref="historyModal" class="maximized" position="bottom" :content-css="{padding: '20px', minHeight: '100vh'}">
+      <div class="card">
+ <div class="card-title bg-primary text-white" icon="mood">
+   <i>mood</i>Your past observations
+ <div class="card-content card-force-top-padding">
+</div>
+ </div>
+</div>
+<wx-usermarkers></wx-usermarkers>
+     <button class="tertiary" @click="$refs.historyModal.close()">Close</button>
+   </q-modal>
   </div>
 </template>
 
 <script>
 import FilePath from '../helpers/filepath.js'
+import UserMarkers from './UserHistory.vue'
 // import * as firebase from 'firebase'
 // import { Loading } from 'quasar'
 export default {
@@ -50,6 +64,9 @@ export default {
       path: '',
       photoDesc: ''
     }
+  },
+  components: {
+    'wxUsermarkers': UserMarkers
   },
   mixins: [FilePath],
   methods: {
@@ -96,7 +113,7 @@ export default {
       this.$store.dispatch('createMarker', markerData)
     },
     showModal: function () {
-      this.$refs.maximizedModal.open()
+      this.$refs.historyModal.open()
     }
   },
   computed: {
