@@ -53,6 +53,9 @@ export const store = new Vuex.Store({
     createMarker (state, payload) {
       state.loadedMarkers.push(...payload)
     },
+    addDownloadURL (state, payload) {
+      state.loadedMarkers.slice(-1).push(payload)
+    },
     setUser (state, payload) {
       state.user = payload
     },
@@ -86,6 +89,7 @@ export const store = new Vuex.Store({
       navigator.geolocation.getCurrentPosition((position) => {
          // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
         let location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        // TODO get city with avios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=53.42308026896434,-1.353393416106956&sensor=true)
         commit('setLocation', location)
       }, (error) => {
         store.dispatch('showMessage', {message: error.message, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
@@ -168,8 +172,11 @@ export const store = new Vuex.Store({
           // window.alert('Uploaded a blob or file!')
           var downloadURL = snapshot.downloadURL
           // TODO Push download URL onto last marker array element
-          var myObj = store.state.loadedMarkers.slice(-1)
-          myObj.downloadURL = downloadURL
+          // var myObj = this.$store.state.loadedMarkers.slice(-1)
+          // myObj.downloadURL = downloadURL
+          store.commit('addDownloadURL', downloadURL)
+          firebase.database().ref().child('/markers/' + payload.uid)
+          .update({downloadURL: downloadURL})
           // window.alert(downloadURL) ** USEFUL FOR USING IMAGE IN FUTURE
         }).catch((error) => {
           window.alert(error)
