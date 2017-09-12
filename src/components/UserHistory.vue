@@ -1,14 +1,16 @@
 <template>
   <div id="user-history">
-   <div v-for="(Marker, key) in pastMarkers" :key="Marker.sender">
+   <div v-show="markers" v-for="(marker, key) in markers" :key="marker.sender">
     <div class="card">
-     <img :style="{backgroundImage: 'url(\'' + Marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" class="thumb"/>
+     <img :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" class="thumb"/>
       <div class="card-content">
-        {{ Marker.dateTime }}
-       {{ Marker.photoDesc}} Location: ____
+        {{ marker.dateTime }}
+       {{ marker.photoDesc}} Location: {{ marker.town}}
       </div>
     </div>
   </div>
+  <div v-show="!markers">
+  <h2>You have not posted any data yet!</h2></div>
   </div>
 </template>
 <script>
@@ -17,10 +19,13 @@ export default {
   data: () => ({
 
   }),
+  props: {
+    markers: Array
+  },
   computed: {
-    pastMarkers () {
-      return this.$store.getters.userMarkers
-    }
+  },
+  created () {
+    console.log(this.markers)
   }
 }
 </script>

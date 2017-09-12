@@ -60,7 +60,7 @@ export default {
         lng: 0
       },
       infoWinOpen: false,
-      location: '',
+      location: {},
       photoURL: '',
       currentMidx: null,
       infoOptions: {
@@ -79,6 +79,9 @@ export default {
       return this.$store.getters.user
     },
     currentUser () {
+      if (!this.$store.getters.currentUser) {
+        return
+      }
       return this.$store.getters.currentUser
     },
     lastMarker () {
@@ -106,7 +109,7 @@ export default {
       }
       navigator.geolocation.getCurrentPosition((position) => {
          // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
-        this.location = {lat: position.coords.latitude, lng: position.coords.longitude}
+        this.location = {lat: parseInt(position.coords.latitude), lng: parseInt(position.coords.longitude)}
         return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
       }, (error) => {
         window.alert('FAILED Error #' + error.code + ' ' + error.message)
