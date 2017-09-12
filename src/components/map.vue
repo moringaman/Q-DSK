@@ -9,7 +9,7 @@
      :options="infoOptions"
      :position="infoWindowPos"
      :opened="infoWinOpen"
-     @closeclick="infoWinOpen=false"> <strong>{{ infoContent }}</strong>
+     @closeclick="infoWinOpen=false"> <strong>{{ infoContent }}</strong><img :src="infoPic" class="thumb"/>
     </gmap-info-window>
     <gmap-marker
       :key="index"
@@ -43,6 +43,7 @@
 
 <script>
 import CreateNewMarker from '../components/CreateMarker.vue'
+// import axios from 'axios'
  // import Vue from 'vue'
 export default {
   components: {
@@ -53,6 +54,7 @@ export default {
       center: {lat: 54.0, lng: -1.6},
       statusText: '',
       infoContent: '',
+      infoPic: '',
       infoWindowPos: {
         lat: 0,
         lng: 0
@@ -87,6 +89,10 @@ export default {
     this.getLocation()
     this.$store.dispatch('loadMarkers')
     console.log(this.markers)
+    // axios.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=53.42308026896434,-1.353393416106956&sensor=true')
+    //  .then(response => {
+    //    console.log(response.data.results[2].formatted_address)
+    //  })
   },
   watch: {
     currentUser: function (val) {
@@ -112,6 +118,7 @@ export default {
     toggleInfoWindow: function (marker, idx) {
       this.infoWindowPos = marker.location
       this.infoContent = marker.sender
+      this.infoPic = marker.downloadURL
       // check if its the same marker that was selected if yes toggle
       if (this.currentMidx === idx) {
         this.infoWinOpen = !this.infoWinOpen
@@ -129,5 +136,10 @@ export default {
 <style>
 .btn-icon {
   font-size: 36px;
+}
+.thumb {
+  width: 70px;
+  height: 70px;
+  border-radius: 3px;
 }
 </style>

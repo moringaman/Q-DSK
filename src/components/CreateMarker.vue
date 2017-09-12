@@ -39,10 +39,10 @@
     <q-modal ref="historyModal" class="maximized" position="bottom" :content-css="{padding: '20px', minHeight: '100vh'}">
       <div class="card">
  <div class="card-title bg-primary text-white" icon="mood">
-   <i>mood</i>Your past observations
- <div class="card-content card-force-top-padding">
-</div>
- </div>
+   <i>history</i>Your Post History
+   </div>
+
+
 </div>
 <wx-usermarkers></wx-usermarkers>
      <button class="tertiary" @click="$refs.historyModal.close()">Close</button>
@@ -104,6 +104,7 @@ export default {
         photoUrl: this.photoURL,
         photoDesc: this.photoDesc,
         dateTime: timeTaken,
+        town: this.$store.getters.locationTown,
         location: {
           lat: this.$store.getters.location.lat,
           lng: this.$store.getters.location.lng
@@ -141,6 +142,6 @@ img {
 
 i {
   font-size: 2em;
-  margin: -15px 2px;
+  margin: -15px 10px;
 }
 </style>

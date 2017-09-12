@@ -4,7 +4,7 @@ import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
 // import Randomstring from 'randomstring'
 import MyUid from '../helpers/uid.js'
-// import Axios from 'axios'
+import Axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -50,6 +50,9 @@ export const store = new Vuex.Store({
     setLocation (state, payload) {
       state.location = payload
     },
+    setLocationTown (state, payload) {
+      state.locationTown = payload
+    },
     createMarker (state, payload) {
       state.loadedMarkers.push(...payload)
     },
@@ -90,6 +93,11 @@ export const store = new Vuex.Store({
          // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
         let location = {lat: position.coords.latitude, lng: position.coords.longitude}
         // TODO get city with avios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=53.42308026896434,-1.353393416106956&sensor=true)
+        Axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true`)
+          .then(response => {
+            let locationTown = response.data.results[2].address_components[3].long_name
+            commit('setLocationTown', locationTown)
+          })
         commit('setLocation', location)
       }, (error) => {
         store.dispatch('showMessage', {message: error.message, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
@@ -108,6 +116,7 @@ export const store = new Vuex.Store({
         photoUrl: payload.photoUrl,
         photoDesc: payload.photoDesc,
         dateTime: payload.dateTime,
+        town: payload.town,
         location: {
           lat: payload.location.lat,
           lng: payload.location.lng
@@ -318,6 +327,9 @@ export const store = new Vuex.Store({
   getters: {
     location (state) {
       return state.location
+    },
+    locationTown (state) {
+      return state.locationTown
     },
     loadedMarkers (state) {
       return state.loadedMarkers
