@@ -44,7 +44,7 @@
 
 
 </div>
-<wx-usermarkers :markers="pastMarkers"></wx-usermarkers>
+ <wx-usermarkers :markers="markers"></wx-usermarkers>
      <button class="tertiary" @click="$refs.historyModal.close()">Close</button>
    </q-modal>
   </div>
@@ -62,12 +62,14 @@ export default {
       photoURL: '',
       photo: '',
       path: '',
-      photoDesc: '',
-      markers: this.pastMarkers
+      photoDesc: ''
     }
   },
   components: {
     'wxUsermarkers': UserMarkers
+  },
+  props: {
+    markers: Array
   },
   mixins: [FilePath],
   methods: {
@@ -127,9 +129,6 @@ export default {
     },
     currentUser () {
       return this.$store.getters.currentUser
-    },
-    pastMarkers () {
-      return this.$store.getters.userMarkers
     }
   }
 }

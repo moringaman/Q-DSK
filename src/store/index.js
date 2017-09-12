@@ -356,6 +356,9 @@ export const store = new Vuex.Store({
       return state.loadedMarkers.slice(-1)
     },
     userMarkers (state) {
+      if (!state.user) {
+        return []
+      }
       var arr = state.loadedMarkers
       var userArr = []
       for (var i = 0; i < arr.length; i++) {

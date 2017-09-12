@@ -33,7 +33,7 @@
        z-index: 100;
        font-size: 20px">
         {{statusText}}
-        <app-createnew></app-createnew>
+        <app-createnew :markers="pastMarkers"></app-createnew>
       </div>
     </div>
   </gmap-map>
@@ -86,20 +86,21 @@ export default {
     },
     lastMarker () {
       return this.$store.getters.lastMarker
+    },
+    pastMarkers () {
+      return this.$store.getters.userMarkers
     }
   },
-  created () {
+  mounted () {
     this.getLocation()
     this.$store.dispatch('loadMarkers')
-    console.log(this.markers)
-    // axios.get('http://maps.googleapis.com/maps/api/geocode/json?latlng=53.42308026896434,-1.353393416106956&sensor=true')
-    //  .then(response => {
-    //    console.log(response.data.results[2].formatted_address)
-    //  })
+    console.log('markers: ' + this.markers)
   },
   watch: {
     currentUser: function (val) {
-      this.$store.dispatch('showMessage', {message: 'Welcome back, ' + val.username, color: 'rgba(0,128,0, 0.6)', icon: 'done'})
+      if (val) {
+        this.$store.dispatch('showMessage', {message: 'Welcome back, ' + val.username, color: 'rgba(0,128,0, 0.6)', icon: 'done'})
+      }
     }
   },
   methods: {
