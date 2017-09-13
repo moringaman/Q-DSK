@@ -12,32 +12,7 @@ export const store = new Vuex.Store({
   state: {
     center: {lat: 54.0, lng: -1.6},
     location: '',
-    loadedMarkers: [
-      {
-        sender: 'John Smith',
-        userId: 'iuyrewiudhiwedhwe',
-        timestamp: '12:00:00',
-        location: {lat: 53.5, lng: -1.34}
-      },
-      {
-        sender: 'Andre Jones',
-        userId: 'dscbdshwidbioiaq',
-        timestamp: '12:00:00',
-        location: {lat: 51.5, lng: -1.04}
-      },
-      {
-        sender: 'Peter Davis',
-        userId: 'duhhwiw9chbcosw0jk',
-        timestamp: '12:00:00',
-        location: {lat: 50.5, lng: -1.36}
-      },
-      {
-        sender: 'Susan Phillips ',
-        userId: '43bjhfsd9h8fbskqwa',
-        timestamp: '12:00:00',
-        location: {lat: 51.2, lng: -1.24}
-      }
-    ],
+    loadedMarkers: [],
     currentUser: [],
     user: [],
     avatar: null,
@@ -55,6 +30,9 @@ export const store = new Vuex.Store({
     },
     createMarker (state, payload) {
       state.loadedMarkers.push(...payload)
+    },
+    clearMarkers (state, payload) {
+      state.loadedMarkers = []
     },
     addDownloadURL (state, payload) {
       state.loadedMarkers.slice(-1).push(payload)
@@ -151,7 +129,8 @@ export const store = new Vuex.Store({
           var itemVal = item.val()
           keys.push(itemVal)
         })
-        console.log(keys)
+        console.log('Loading Keys.. ' + JSON.stringify(keys))
+        commit('clearMarkers', '[]')
         commit('createMarker', keys)
       })
     },

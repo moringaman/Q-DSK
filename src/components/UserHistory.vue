@@ -24,8 +24,13 @@ export default {
   },
   computed: {
   },
-  created () {
+  mounted () {
     console.log(this.markers)
+  },
+  watch: {
+    markers (val) {
+      console.log('watched: ' + JSON.stringify(val))
+    }
   }
 }
 </script>

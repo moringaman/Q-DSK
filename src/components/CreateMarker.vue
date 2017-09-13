@@ -36,7 +36,7 @@
       <button class="tertiary" @click="$refs.maximizedModal.close()">Try Again</button>
     </q-modal>
     <!-- Modal for submission history -->
-    <q-modal ref="historyModal" class="maximized" position="bottom" :content-css="{padding: '20px', minHeight: '100vh'}">
+    <q-modal @open="loadMarkers()" ref="historyModal" class="maximized" position="bottom" :content-css="{padding: '20px', minHeight: '100vh'}">
       <div class="card">
  <div class="card-title bg-primary text-white" icon="mood">
    <i>history</i>Your Post History
@@ -62,7 +62,8 @@ export default {
       photoURL: '',
       photo: '',
       path: '',
-      photoDesc: ''
+      photoDesc: '',
+      usersMarkers: this.markers
     }
   },
   components: {
@@ -118,6 +119,10 @@ export default {
     },
     showModal: function () {
       this.$refs.historyModal.open()
+    },
+    loadMarkers: function () {
+      this.$store.dispatch('loadMarkers')
+      // this.usersMarkers = this.usersMarkers.splice(0, this.usersMarkers.length / 2)
     }
   },
   computed: {
