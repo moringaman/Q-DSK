@@ -119,6 +119,7 @@ export const store = new Vuex.Store({
     },
     loadMarkers ({commit}, payload) {
       // TODO query firebase for markers and push to state markers object
+      commit('setLoading', true)
       const db = firebase.database()
       const ref = db.ref('markers')
       ref.orderByKey().limitToFirst(1)
@@ -132,6 +133,7 @@ export const store = new Vuex.Store({
         console.log('Loading Keys.. ' + JSON.stringify(keys))
         commit('clearMarkers', '[]')
         commit('createMarker', keys)
+        commit('setLoading', false)
       })
     },
     photoUpload ({dispatch}, payload) {

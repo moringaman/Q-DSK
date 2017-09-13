@@ -32,7 +32,7 @@
 </div>
   </div>
 </div>
-      <button class="positive" @click="markerCreate()">Post Image</button>
+      <button class="positive" @click="checkAuthStatus()">Post Image</button>
       <button class="tertiary" @click="$refs.maximizedModal.close()">Try Again</button>
     </q-modal>
     <!-- Modal for submission history -->
@@ -53,7 +53,7 @@
 <script>
 import FilePath from '../helpers/filepath.js'
 import UserMarkers from './UserHistory.vue'
-// import * as firebase from 'firebase'
+import * as firebase from 'firebase'
 // import { Loading } from 'quasar'
 export default {
 
@@ -74,6 +74,17 @@ export default {
   },
   mixins: [FilePath],
   methods: {
+    checkAuthStatus: function () {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.markerCreate()
+        }
+        else {
+          this.$router.push('/signin')
+          this.$store.dispatch('showMessage', {message: 'please login to post data', color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
+        }
+      })
+    },
     takePicture: function () {
       if (!navigator.camera) {
         window.alert('cordova.camera not found !')
