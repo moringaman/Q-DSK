@@ -1,15 +1,15 @@
 <template>
   <div id="user-history">
    <div v-show="markers" v-for="(marker, key) in markers" :key="marker.sender">
+     <spinner v-show="loading"></spinner>
     <div class="card" >
       <div class="card-title" :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" >
-        {{ marker.dateTime }}
+        <span class="title-text">{{ marker.dateTime }}</span>
       </div>
-    <spinner v-show="loading"></spinner>
     <!-- <img :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" class="thumb"/> -->
       <div class="card-content">
-
-       {{ marker.photoDesc}} Location: {{ marker.town}}
+      {{ marker.photoDesc}} <br>
+      {{ marker.town}}
       </div>
     </div>
   </div>
@@ -55,5 +55,10 @@ export default {
 .card-title {
   height: 150px;
   color: #D1D2D3;
+}
+
+.title-text {
+  background-color: rgba(0,0,0, 0.4);
+  padding: 3px 3px;
 }
 </style>
