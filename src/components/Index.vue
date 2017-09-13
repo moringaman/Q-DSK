@@ -89,6 +89,14 @@
               <q-toggle v-model="Newsletter" class="green"></q-toggle>
             </div>
           </label>
+          <label class="item">
+            <div class="item-content has-secondary">
+              Tweet my photos
+            </div>
+            <div class="item-secondary">
+              <q-toggle v-model="twitter" class="green"></q-toggle>
+            </div>
+          </label>
       </div>
             </div>
         </q-drawer>
@@ -107,7 +115,8 @@ export default {
   data () {
     return {
       Events: false,
-      Newsletter: true
+      Newsletter: true,
+      twitter: true
     }
   },
   computed: {

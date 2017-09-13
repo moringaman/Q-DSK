@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <gmap-map
-    :center="{lat: location.lat, lng: location.lng}"
+    :center="{lat: location.lat , lng: location.lng}"
     :disableDefaultUI="true"
     :zoom="6"
     style="width: 100%; height: 94vh; z-index: 0">
@@ -9,7 +9,7 @@
      :options="infoOptions"
      :position="infoWindowPos"
      :opened="infoWinOpen"
-     @closeclick="infoWinOpen=false"> <strong>{{ infoContent }}</strong><img :src="infoPic" class="thumb"/>
+     @closeclick="infoWinOpen=false"> <img :src="infoPic" class="thumb"/><div><strong>{{ infoContent }}</strong></div>
     </gmap-info-window>
     <gmap-marker
       :key="index"
@@ -37,6 +37,8 @@
       </div>
     </div>
   </gmap-map>
+  <div slot="footer" class="toolbar">
+</div>
 </q-layout>
 
 </template>
@@ -109,7 +111,7 @@ export default {
         window.alert('No geo-location')
       }
       navigator.geolocation.getCurrentPosition((position) => {
-         // window.alert('{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}')
+        // window.alert('{lat: ' + parseInt(position.coords.latitude) + ', lng: ' + parseInt(position.coords.longitude) + '}')
         this.location = {lat: parseInt(position.coords.latitude), lng: parseInt(position.coords.longitude)}
         return '{lat: ' + position.coords.latitude + ', lng: ' + position.coords.longitude + '}'
       }, (error) => {
@@ -138,12 +140,44 @@ export default {
 </script>
 
 <style>
+
+
 .btn-icon {
   font-size: 36px;
 }
 .thumb {
-  width: 70px;
-  height: 70px;
+  width: 150px;
+  height: 150px;
   border-radius: 3px;
 }
+
+
+
+.gm-style .gm-style-iw {
+            background-color: #3C61AD !important;
+            color: white;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            min-height: 100% !important;
+            padding-top: 0px;
+            padding-bottom: 110px;
+            padding-left: 0px;
+            padding-right: 200px;
+            display: block !important;
+         }
+
+         /*style the arrow*/
+        .gm-style div div div div div div div div {
+            background-color: #3C61AD !important;
+            padding: 0;
+            margin: 0;
+            padding: 10;
+            position: absolute;
+            top: 0;
+            left: 150px;
+            color: #fff;
+            font-size: 16px;
+        }
 </style>

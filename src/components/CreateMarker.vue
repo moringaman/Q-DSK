@@ -30,6 +30,10 @@
   <textarea required class="full-width" v-model="photoDesc"></textarea>
   <label>Description</label>
 </div>
+<div class="floating-label">
+<q-range v-model="number" :min="1" :max="10"></q-range>
+<label>Chemtrail Count</label>
+</div>
   </div>
 </div>
       <button class="positive" @click="checkAuthStatus()">Post Image</button>
@@ -45,7 +49,7 @@
 
 </div>
  <wx-usermarkers :markers="markers"></wx-usermarkers>
-     <button class="tertiary" @click="$refs.historyModal.close()">Close</button>
+     <button class="tertiary" @click="$refs.historyModal.close()">Back</button>
    </q-modal>
   </div>
 </template>
@@ -63,7 +67,10 @@ export default {
       photo: '',
       path: '',
       photoDesc: '',
-      usersMarkers: this.markers
+      usersMarkers: this.markers,
+      number: 0,
+      min: 1,
+      max: 10
     }
   },
   components: {
