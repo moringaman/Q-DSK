@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    center: {lat: 54.0, lng: -1.6},
+    // center: {lat: 54.0, lng: -1.6},
     location: '',
     loadedMarkers: [],
     currentUser: [],
@@ -302,7 +302,7 @@ export const store = new Vuex.Store({
       firebase.auth().signOut()
       commit('setUser', null)
       commit('setLoggedIn', false)
-      commit('setCurrentUser', null)
+      // commit('setCurrentUser', null)
     }
   },
   getters: {

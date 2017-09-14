@@ -40,10 +40,11 @@ Quasar.start(() => {
     created () {
       firebase.initializeApp(config)
       firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
+        if (user & this.$store.getters.currentUser.length > 0) {
           this.$router.push('/')
           this.$store.commit('setUser', user)
           this.$store.commit('setLoggedIn', true)
+          this.$store.dispatch('showMessage', {message: 'please login to post data', color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
         }
         else {
           this.$router.push('/signin')
