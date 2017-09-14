@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
 import { Loading, Toast } from 'quasar'
-// import Randomstring from 'randomstring'
 import MyUid from '../helpers/uid.js'
+// import RgbCheck from '../helpers/rgbcheck.js'
 import Axios from 'axios'
 
 Vue.use(Vuex)
@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     location: '',
     loadedMarkers: [],
     currentUser: [],
+    imageRGB: {},
     user: [],
     avatar: null,
     markerId: null,
@@ -30,6 +31,9 @@ export const store = new Vuex.Store({
     },
     createMarker (state, payload) {
       state.loadedMarkers.push(...payload)
+    },
+    setImageRGB (state, payload) {
+      state.imageRGB = payload
     },
     clearMarkers (state, payload) {
       state.loadedMarkers = []
@@ -138,9 +142,15 @@ export const store = new Vuex.Store({
     },
     photoUpload ({dispatch}, payload) {
       // var id = store.markerId
-      var img = new Image()
-      var c = document.createElement('canvas')
-      var ctx = c.getContext('2d')
+      var img = new Image(),
+        c = document.createElement('canvas'),
+        ctx = c.getContext('2d'),
+        rgb = {r: 0, g: 0, b: 0},
+        blockSize = 5,
+        data,
+        i = -4,
+        length,
+        count = 0
       let storage = firebase.storage()
       let storageRef = storage.ref()
       let filesRef = storageRef.child('markers/' + payload.uid + '.jpg')
@@ -149,6 +159,20 @@ export const store = new Vuex.Store({
         c.width = this.naturalWidth     // update canvas size to match image
         c.height = this.naturalHeight
         ctx.drawImage(this, 0, 0)
+        data = ctx.getImageData(0, 0, c.width, c.height)
+        length = data.data.length
+        // loop through image data to get average rgb value
+        while ((i += blockSize * 4) < length) {
+          ++count
+          rgb.r += data.data[i]
+          rgb.g += data.data[i + 1]
+          rgb.b += data.data[i + 2]
+        }
+        // ~~ used to floor values
+        rgb.r = ~~(rgb.r / count)
+        rgb.g = ~~(rgb.g / count)
+        rgb.b = ~~(rgb.b / count)
+        store.dispatch('setImageRGB', rgb)
         var dataURL = c.toDataURL('image/jpeg', 0.75)
         Loading.show(
           {

@@ -37,8 +37,6 @@
       </div>
     </div>
   </gmap-map>
-  <div slot="footer" class="toolbar">
-</div>
 </q-layout>
 
 </template>
