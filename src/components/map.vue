@@ -18,10 +18,31 @@
       :position="m.location"
       :clickable="true"
       :draggable="false"
-      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.timestamp + location.lat"
+      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.dateTime + ' in ' + m.town"
       @mouseout="statusText = null"
-      @click="toggleInfoWindow(m,index)"
-    ></gmap-marker>
+      @click="toggleInfoWindow(m,index)">
+    </gmap-marker>
+    <div slot="visible" style="height: 150px; border: 10px solid royalblue;">
+      <div style="bottom: 0;
+       left: 0;
+       right: 0;
+       line-height: 25px;
+       bottom: 580px;
+       background-color: royalblue;
+       color: white;
+       position: absolute;
+       z-index: 100;
+       font-size: 20px;
+       width: 100vw;
+       text-align: center;
+       font-size: 14px;">
+         {{statusText}}
+         <button @click="setTheme('light')" class="theme_btn primary small circular" id="light_theme"><i>brush</i></button>
+          <button @click="setTheme('green')" class="theme_btn primary small circular" id="green_theme"><i>brush</i></button>
+          <button class="theme_btn primary small circular" id="dark_theme"><i>brush</i></button>
+
+      </div>
+    </div>
     <div slot="visible">
       <div style="bottom: 0;
        left: 0;
@@ -33,7 +54,6 @@
        position: absolute;
        z-index: 100;
        font-size: 20px">
-        {{statusText}}
         <app-createnew :markers="pastMarkers"></app-createnew>
         <div id="counters">
         <i id="user">account_circle</i>
@@ -41,6 +61,7 @@
          <i id="world">public</i>
        <div class="mcount" id="usermarker">{{pastMarkers.length}}</div>
         </div>
+
       </div>
     </div>
   </gmap-map>
@@ -51,7 +72,7 @@
 <script>
 import CreateNewMarker from '../components/CreateMarker.vue'
 // import axios from 'axios'
- // import Vue from 'vue'
+import Vue from 'vue'
 export default {
   components: {
     appCreatenew: CreateNewMarker
@@ -60,6 +81,7 @@ export default {
     return {
       center: {lat: 54.0, lng: -1.6},
       statusText: '',
+      theme: 'light',
       infoContent: '',
       infoPic: '',
       infoWindowPos: {
@@ -79,7 +101,7 @@ export default {
       options: {
         disableDefaultUI: false,
         scrollwheel: false,
-        styles: this.$mapstyle()
+        styles: this.$mapstyle(this.theme)
       }
     }
   },
@@ -116,6 +138,13 @@ export default {
       if (val) {
         this.$store.dispatch('showMessage', {message: 'Welcome back, ' + val.username, color: 'rgba(0,128,0, 0.6)', icon: 'done'})
       }
+    },
+    '$route' (to, from) {
+    // Call resizePreserveCenter() on all maps
+      Vue.$gmapDefaultResizeBus.$emit('resize')
+    },
+    markers: function () {
+      Vue.$gmapDefaultResizeBus.$emit('resize')
     }
   },
   methods: {
@@ -147,12 +176,19 @@ export default {
         this.infoWinOpen = true
         this.currentMidx = idx
       }
+    },
+    setTheme: function (e) {
+      this.theme = e
+      Vue.$gmapDefaultResizeBus.$emit('resize')
     }
+  },
+  beforeMount () {
+    this.$mapstyle(this.theme)
   }
 }
 </script>
 
-<style scoped>
+<style>
 
 
 .btn-icon {
@@ -164,17 +200,21 @@ export default {
   border-radius: 3px;
 }
 
-i {
+#world {
+  background-color: black;
   font-size: 48px;
   border-radius: 50%;
 }
 
-#world {
-  background-color: black;
-}
 
 #user {
   background-color: green;
+  font-size: 48px;
+  border-radius: 50%;
+}
+
+.innerStatus {
+  padding: 10px;
 }
 
 .mcount {
@@ -201,7 +241,7 @@ i {
             padding-left: 0px;
             padding-right: 200px;
             display: block !important;
-         }
+                  }
 
          /*style the arrow*/
         .gm-style div div div div div div div div {
@@ -246,6 +286,28 @@ i {
   #counters {
     margin-bottom: 130px;
     margin-left: 10px;
+  }
+
+  .theme_btn {
+    position: absolute;
+  }
+
+  #light_theme {
+    left: 85vw;
+    top: 300;
+    background-color: skyblue;
+  }
+
+  #green_theme {
+    left: 85vw;
+    top: 40px;
+    background-color: limegreen;
+  }
+
+  #dark_theme {
+    left: 85vw;
+    top: 80px;
+    background-color: blue;
   }
 
 </style>

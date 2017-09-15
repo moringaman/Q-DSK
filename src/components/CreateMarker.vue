@@ -118,7 +118,7 @@ export default {
     },
     markerCreate: function () {
       this.$refs.maximizedModal.close()
-      let timeTaken = new Date().toLocaleString()
+      let timeTaken = new Date() // .toLocaleString()
       const markerData = {
         userId: this.user.uid,
         image: this.photo,
