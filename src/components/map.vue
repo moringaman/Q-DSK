@@ -2,8 +2,9 @@
   <q-layout>
     <gmap-map
     :center="{lat: location.lat , lng: location.lng}"
-    :disableDefaultUI="true"
     :zoom="6"
+    :options="options"
+    :scaleControl="false"
     style="width: 100%; height: 94vh; z-index: 0">
     <gmap-info-window
      :options="infoOptions"
@@ -27,13 +28,19 @@
        right: 0;
        line-height: 50px;
        bottom: 10px;
-       background-color: rgba(0,0,0, 0.5);
+       background-color: rgba(0,0,0, 0.0);
        color: white;
        position: absolute;
        z-index: 100;
        font-size: 20px">
         {{statusText}}
         <app-createnew :markers="pastMarkers"></app-createnew>
+        <div id="counters">
+        <i id="user">account_circle</i>
+       <div class="mcount" id="worldmarker">{{markerNumber}}</div>
+         <i id="world">public</i>
+       <div class="mcount" id="usermarker">{{pastMarkers.length}}</div>
+        </div>
       </div>
     </div>
   </gmap-map>
@@ -68,6 +75,11 @@ export default {
           width: 0,
           height: -35
         }
+      },
+      options: {
+        disableDefaultUI: false,
+        scrollwheel: false,
+        styles: this.$mapstyle()
       }
     }
   },
@@ -89,6 +101,9 @@ export default {
     },
     pastMarkers () {
       return this.$store.getters.userMarkers
+    },
+    markerNumber () {
+      return this.$store.getters.loadedMarkers.length
     }
   },
   mounted () {
@@ -137,7 +152,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 
 .btn-icon {
@@ -149,7 +164,29 @@ export default {
   border-radius: 3px;
 }
 
+i {
+  font-size: 48px;
+  border-radius: 50%;
+}
 
+#world {
+  background-color: black;
+}
+
+#user {
+  background-color: green;
+}
+
+.mcount {
+  background-color: red;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  font-size: 10px;
+  text-align: center;
+
+}
 
 .gm-style .gm-style-iw {
             background-color: #3C61AD !important;
@@ -178,4 +215,37 @@ export default {
             color: #fff;
             font-size: 16px;
         }
+  .indicator {
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    border-radius: 50%;
+  /*  display: inline-block; */
+  }
+
+
+  #usermarker {
+    position: absolute;
+    top: -5px;
+    left: 35px;
+  }
+
+  #worldmarker {
+    position: relative;
+    top: 15px;
+    left: 25px;
+  }
+
+  #markerCount{
+    position: relative;
+    margin-bottom: 10px;
+    padding: 0px;
+  }
+
+  #counters {
+    margin-bottom: 130px;
+    margin-left: 10px;
+  }
+
 </style>

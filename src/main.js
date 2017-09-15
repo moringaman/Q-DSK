@@ -13,6 +13,9 @@ import { store } from './store'
 import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import MapStyle from './helpers/mapstyle'
+
+Vue.prototype.$mapstyle = MapStyle
 
 Vue.use(Quasar, {
   components: {

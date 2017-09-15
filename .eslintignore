@@ -2,3 +2,4 @@ build/*.js
 config/*.js
 dist/*.js
 src/*.vue
+src/helpers/*.js

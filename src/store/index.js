@@ -172,6 +172,7 @@ export const store = new Vuex.Store({
         rgb.r = ~~(rgb.r / count)
         rgb.g = ~~(rgb.g / count)
         rgb.b = ~~(rgb.b / count)
+        window.alert(rgb)
         store.dispatch('setImageRGB', rgb)
         var dataURL = c.toDataURL('image/jpeg', 0.75)
         Loading.show(
@@ -356,6 +357,9 @@ export const store = new Vuex.Store({
     },
     currentUser (state) {
       return state.currentUser
+    },
+    imageRGB (state) {
+      return state.imageRGB
     },
     lastMarker (state) {
       return state.loadedMarkers.slice(-1)
