@@ -101,7 +101,7 @@ export default {
       options: {
         disableDefaultUI: false,
         scrollwheel: false,
-        styles: this.$mapstyle(this.theme)
+        styles: this.$mapstyle()
       }
     }
   },
