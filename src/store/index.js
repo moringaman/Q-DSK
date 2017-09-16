@@ -140,6 +140,8 @@ export const store = new Vuex.Store({
         commit('setLoading', false)
       })
     },
+    userProfileUpdate ({commit}, payload) {
+    },
     photoUpload ({dispatch}, payload) {
       // var id = store.markerId
       var img = new Image(),

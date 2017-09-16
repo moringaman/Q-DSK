@@ -50,7 +50,7 @@ Quasar.start(() => {
           this.$store.commit('setLoggedIn', true)
         }
         else {
-          this.$router.push('/signin')
+          this.$router.push('/signup')
           this.$store.commit('setLoggedIn', false)
           this.$store.dispatch('showMessage', {message: 'please login to post data', color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
         }

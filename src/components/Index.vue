@@ -20,7 +20,7 @@
     -->
     <div class="layout-view">
     <app-map></app-map>
-    <span style="font-size: 12px;">{{ user }}</span>
+    <!-- <span style="font-size: 12px;">{{ user }}</span> -->
 
     </div>
 
@@ -72,6 +72,13 @@
                   </div>
                 </div>
               </div>
+              <div class="item">
+                <div class="item-content">
+                  <img v-if="image" :src="imageURL" style="height: 100px; width: 100px"/>
+                  <button class="primary" @click="onFileSelect">Choose Profile Picture</button>
+                  <input type="file" style="visibility: hidden" ref="filepicker" @change="onFileSelected" accept="image/*">
+                </div>
+              </div><br>
               <hr>
                    <label class="item">
             <div class="item-content has-secondary">
@@ -116,7 +123,9 @@ export default {
     return {
       Events: false,
       Newsletter: true,
-      twitter: true
+      twitter: true,
+      imageURL: '',
+      image: null
     }
   },
   computed: {
@@ -130,6 +139,24 @@ export default {
   methods: {
     signOut () {
       this.$store.dispatch('signOut')
+    },
+    onFileSelect () {
+      this.$refs.filepicker.click()
+    },
+    onFileSelected (event) {
+      const files = event.target.files
+      console.log(files)
+      let filename = files[0].name
+      console.log(filename)
+      if (filename.lastIndexOf('.') <= 0) {
+        window.alert('please select a valid file')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageURL = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
   },
   watch: {
