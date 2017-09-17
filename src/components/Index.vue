@@ -51,7 +51,7 @@
               <div class="item multiple-lines">
                <div class="item-content">
                  <div class="floating-label">
-                   <input class="full-width">
+                   <input v-model="username"class="full-width">
                    <label>User Name</label>
                  </div>
                </div>
@@ -59,7 +59,7 @@
               <div class="item multiple-lines">
                <div class="item-content">
                  <div class="floating-label">
-                   <input class="full-width">
+                   <input v-model="country" class="full-width">
                    <label>Country</label>
                  </div>
                </div>
@@ -67,7 +67,7 @@
              <div class="item multiple-lines">
                 <div class="item-content">
                   <div class="floating-label">
-                    <textarea placeholder="tell everyone a little about yourself here" class="full-width"></textarea>
+                    <textarea v-model="interests" placeholder="tell everyone a little about yourself here" class="full-width"></textarea>
                     <label>Interests</label>
                   </div>
                 </div>
@@ -85,7 +85,7 @@
               Events and reminders?
             </div>
             <div class="item-secondary">
-              <q-toggle v-model="Events"></q-toggle>
+              <q-toggle v-model="events"></q-toggle>
             </div>
           </label>
           <label class="item">
@@ -93,7 +93,7 @@
               Newsletter?
             </div>
             <div class="item-secondary">
-              <q-toggle v-model="Newsletter" class="green"></q-toggle>
+              <q-toggle v-model="newsletter" class="green"></q-toggle>
             </div>
           </label>
           <label class="item">
@@ -105,7 +105,9 @@
             </div>
           </label>
       </div>
+
             </div>
+            <button @click="updateProfile" class="primary">Submit</button>
         </q-drawer>
 </q-layout>
 </template>
@@ -121,11 +123,15 @@ export default {
   },
   data () {
     return {
-      Events: false,
-      Newsletter: true,
+      country: '',
+      interests: '',
+      events: false,
+      newsletter: true,
       twitter: true,
       imageURL: '',
-      image: null
+      image: null,
+      username: '',
+      filename: ''
     }
   },
   computed: {
@@ -147,6 +153,7 @@ export default {
       const files = event.target.files
       console.log(files)
       let filename = files[0].name
+      this.filename = filename
       console.log(filename)
       if (filename.lastIndexOf('.') <= 0) {
         window.alert('please select a valid file')
@@ -157,6 +164,18 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
       this.image = files[0]
+    },
+    updateProfile () {
+      var profileData = {
+        events: this.events,
+        newsletter: this.newsletter,
+        twitter: this.twitter,
+        image: this.image,
+        fileName: this.filename,
+        userId: this.user.uid,
+        username: this.username
+      }
+      this.$store.dispatch('userProfileUpdate', profileData)
     }
   },
   watch: {
