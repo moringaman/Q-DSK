@@ -141,23 +141,40 @@ export const store = new Vuex.Store({
       })
     },
     userProfileUpdate ({commit}, payload) {
-      const filename = payload.fileName
-      const ext = filename.slice(filename.lastIndexOf('.'))
-      firebase.storage().ref().child('avatars/' + payload.userId + '.' + ext).put(payload.image)
-      .then((fileData) => {
-        let imageURL = fileData.metadata.downloadURLs[0]
-        return firebase.database().ref('users').child(payload.userId)
+      if (payload.fileName) {
+        const filename = payload.fileName
+        const ext = filename.slice(filename.lastIndexOf('.'))
+        firebase.storage().ref().child('avatars/' + payload.userId + '.' + ext).put(payload.image)
+        .then((fileData) => {
+          let imageURL = fileData.metadata.downloadURLs[0]
+          return firebase.database().ref('users').child(payload.userId)
+          .update(
+            {
+              username: payload.username,
+              avatarURL: imageURL,
+              events: payload.events,
+              twitter: payload.twitter,
+              newsletter: payload.newsletter,
+              country: payload.country,
+              interests: payload.interests
+            }
+          )
+        }
+       )
+      }
+      else {
+        firebase.database().ref('users').child(payload.userId)
         .update(
           {
             username: payload.username,
-            avatarURL: imageURL,
             events: payload.events,
             twitter: payload.twitter,
-            newsletter: payload.newsletter
+            newsletter: payload.newsletter,
+            country: payload.country,
+            interests: payload.interests
           }
         )
       }
-     )
     },
     photoUpload ({dispatch}, payload) {
       // var id = store.markerId
@@ -312,7 +329,12 @@ export const store = new Vuex.Store({
             .ref('users/' + newUser.id).set(
               {
                 email: payload.email,
-                username: payload.username
+                username: payload.username,
+                events: '',
+                newsletter: '',
+                country: '',
+                twitter: '',
+                interests: ''
               }
             ).then((user) => {
               commit('setLoggedIn', true)

@@ -72,42 +72,39 @@
                   </div>
                 </div>
               </div>
-              <div class="item">
-                <div class="item-content">
-                  <img v-if="image" :src="imageURL" style="height: 100px; width: 100px"/>
-                  <button class="primary" @click="onFileSelect">Choose Profile Picture</button>
-                  <input type="file" style="visibility: hidden" ref="filepicker" @change="onFileSelected" accept="image/*">
-                </div>
-              </div><br>
-              <hr>
-                   <label class="item">
-            <div class="item-content has-secondary">
-              Events and reminders?
-            </div>
-            <div class="item-secondary">
-              <q-toggle v-model="events"></q-toggle>
-            </div>
-          </label>
-          <label class="item">
-            <div class="item-content has-secondary">
-              Newsletter?
-            </div>
-            <div class="item-secondary">
-              <q-toggle v-model="newsletter" class="green"></q-toggle>
-            </div>
-          </label>
-          <label class="item">
-            <div class="item-content has-secondary">
-              Tweet my photos
-            </div>
-            <div class="item-secondary">
-              <q-toggle v-model="twitter" class="green"></q-toggle>
-            </div>
-          </label>
+                  <img v-if="imageURL != ''" :src="imageURL" style="height: 70px; width: 70px; margin-left: 50px"/>
+                  <img v-if="imageURL === ''" src="../assets/placeholder.png" style="height: 70px; width: 70px; margin-left: 50px;"/>
+                  <button style="margin-bottom:30px;" class="primary" @click="onFileSelect">Avatar</button>
+                  <input type="file" style="visibility: hidden; display: none" ref="filepicker" @change="onFileSelected" accept="image/*">
       </div>
-
             </div>
-            <button @click="updateProfile" class="primary">Submit</button>
+
+            <label class="item">
+            <div class="item-content has-secondary">
+            Events and reminders?
+            </div>
+            <div class="item-secondary">
+            <q-toggle v-model="events"></q-toggle>
+            </div>
+            </label>
+            <label class="item">
+            <div class="item-content has-secondary">
+            Newsletter?
+            </div>
+            <div class="item-secondary">
+            <q-toggle v-model="newsletter" class="green"></q-toggle>
+            </div>
+            </label>
+            <label class="item">
+            <div class="item-content has-secondary">
+            Tweet my photos
+            </div>
+            <div class="item-secondary">
+            <q-toggle v-model="twitter" class="red"></q-toggle>
+            </div>
+            </label>
+            <hr>
+              <button @click="updateProfile" class="primary" style="margin-left: 60px">Submit Changes</button>
         </q-drawer>
 </q-layout>
 </template>
@@ -116,7 +113,7 @@
 
 // import { Utils, Platform } from 'quasar'
 import Map from './map.vue'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 export default {
   components: {
     appMap: Map
@@ -140,6 +137,9 @@ export default {
     },
     loggedIn () {
       return this.$store.getters.signedIn
+    },
+    userProfile () {
+      return this.$store.getters.currentUser
     }
   },
   methods: {
@@ -169,11 +169,13 @@ export default {
       var profileData = {
         events: this.events,
         newsletter: this.newsletter,
+        country: this.country,
         twitter: this.twitter,
         image: this.image,
         fileName: this.filename,
         userId: this.user.uid,
-        username: this.username
+        username: this.username,
+        interests: this.interests
       }
       this.$store.dispatch('userProfileUpdate', profileData)
     }
@@ -187,14 +189,14 @@ export default {
 
   },
   created () {
-    var user = firebase.auth().currentUser
-    if (user) {
-    // User is signed in.
-      this.$store.commit('setUser', user)
-    }
-    else {
-    //  this.$router.push('/signin')
-    }
+    this.country = this.userProfile.country
+    this.username = this.userProfile.username
+    this.twitter = this.userProfile.twitter
+    this.interests = this.userProfile.interests
+    this.imageURL = this.userProfile.avatarURL
+    this.newsletter = this.userProfile.newsletter
+    this.events = this.userProfile.events
+    console.log('Image URL: ' + this.imageURL)
   }
 }
 </script>
