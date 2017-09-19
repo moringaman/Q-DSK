@@ -9,7 +9,8 @@
         DarkSkies
       </q-toolbar-title>
       <button class="hide-on-drawer-visible" @click="$refs.rightDrawer.open()">
-      <i>perm_identity</i>
+      <i v-if="imageURL ===''">perm_identity</i>
+      <img v-if="imageURL != ''" :src="imageURL" style="height: 35px; width: 35px; border-radius: 50%"/>
     </button>
     </div>
 

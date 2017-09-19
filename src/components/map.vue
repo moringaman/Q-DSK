@@ -99,7 +99,7 @@ export default {
         }
       },
       options: {
-        disableDefaultUI: false,
+        disableDefaultUI: true,
         scrollwheel: false,
         styles: this.$mapstyle()
       }
