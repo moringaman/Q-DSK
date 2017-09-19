@@ -142,6 +142,11 @@ export const store = new Vuex.Store({
     },
     userProfileUpdate ({commit}, payload) {
       if (payload.fileName) {
+        Loading.show(
+          {
+            message: 'Updating Profile'
+          }
+        )
         const filename = payload.fileName
         const ext = filename.slice(filename.lastIndexOf('.'))
         firebase.storage().ref().child('avatars/' + payload.userId + '.' + ext).put(payload.image)
@@ -161,8 +166,14 @@ export const store = new Vuex.Store({
           )
         }
        )
+        Loading.hide()
       }
       else {
+        Loading.show(
+          {
+            message: 'Updating Profile'
+          }
+        )
         firebase.database().ref('users').child(payload.userId)
         .update(
           {
@@ -174,6 +185,7 @@ export const store = new Vuex.Store({
             interests: payload.interests
           }
         )
+        Loading.hide()
       }
     },
     photoUpload ({dispatch}, payload) {

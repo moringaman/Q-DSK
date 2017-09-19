@@ -181,7 +181,7 @@ export default {
         interests: this.interests
       }
       this.$store.dispatch('userProfileUpdate', profileData)
-      $refs.rightDrawer.open()
+      this.$refs.rightDrawer.close()
     }
   },
   watch: {
