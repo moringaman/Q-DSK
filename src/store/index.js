@@ -208,7 +208,7 @@ export const store = new Vuex.Store({
         rgb.r = ~~(rgb.r / count)
         rgb.g = ~~(rgb.g / count)
         rgb.b = ~~(rgb.b / count)
-        window.alert(rgb)
+        window.alert(JSON.stringify(rgb))
         store.dispatch('setImageRGB', rgb)
         var dataURL = c.toDataURL('image/jpeg', 0.75)
         Loading.show(

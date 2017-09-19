@@ -75,8 +75,9 @@
               </div>
                   <img v-if="imageURL != ''" :src="imageURL" style="height: 80px; width: 80px; margin-left: 50px; border-radius: 50%"/>
                   <img v-if="imageURL === ''" src="../assets/placeholder.png" style="height: 70px; width: 70px; margin-left: 50px;"/>
-                  <button style="margin-bottom:30px;" class="primary clear small" @click="onFileSelect">Change</button>
-                  <input type="file" style="visibility: hidden; display: none" ref="filepicker" @change="onFileSelected" accept="image/*">
+                  <!-- <button style="margin-bottom:30px;" class="primary clear small" @click="onFileSelect">Change</button> -->
+                  <input type="file" id="file" class="inputfile" ref="filepicker" @change="onFileSelected" accept="image/*" capture>
+                  <label for="file">CHANGE</label>
       </div>
             </div>
 
@@ -152,6 +153,7 @@ export default {
     },
     onFileSelected (event) {
       const files = event.target.files
+      // if (!files) return ''
       console.log(files)
       let filename = files[0].name
       this.filename = filename
@@ -179,6 +181,7 @@ export default {
         interests: this.interests
       }
       this.$store.dispatch('userProfileUpdate', profileData)
+      $refs.rightDrawer.open()
     }
   },
   watch: {
@@ -206,4 +209,33 @@ export default {
  .small {
    font-size: 12px;
  }
+
+.inputfile {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: white;
+    padding: 5px 10px;
+    background-color: #0273D4;
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 30px;
+    margin-right: 50px;
+    float: right;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+
 </style>
