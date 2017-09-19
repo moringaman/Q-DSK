@@ -29,6 +29,7 @@
     "vue-cordova": "^0.1.2",
     "vue-router": "^2.0.0",
     "vue2-google-maps": "^0.8.0",
+    "vuefire": "^1.4.3",
     "vuex": "^2.3.1"
   },
   "devDependencies": {

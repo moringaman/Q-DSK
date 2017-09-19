@@ -1,7 +1,7 @@
 <template>
   <q-layout>
     <gmap-map
-    :center="{lat: location.lat , lng: location.lng}"
+    :center="{lat: location.lat, lng: location.lng}"
     :zoom="6"
     :options="options"
     :scaleControl="false"
@@ -81,7 +81,7 @@ export default {
     return {
       center: {lat: 54.0, lng: -1.6},
       statusText: '',
-      theme: 'light',
+      theme: 'green',
       infoContent: '',
       infoPic: '',
       infoWindowPos: {

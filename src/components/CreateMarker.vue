@@ -118,7 +118,15 @@ export default {
     },
     markerCreate: function () {
       this.$refs.maximizedModal.close()
-      let timeTaken = new Date() // .toLocaleString()
+      let options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }
+      let timeTaken = new Date().toLocaleDateString(options)
       const markerData = {
         userId: this.user.uid,
         image: this.photo,

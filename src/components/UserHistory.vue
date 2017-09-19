@@ -4,7 +4,7 @@
     <div class="card" >
       <div class="card-title" :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" >
         <spinner v-show="loading" color="#000fff" :size="30" name="hourglass"></spinner>
-        <span class="title-text">{{ marker.dateTime }}</span>
+        <span class="title-text">{{ marker.dateTime | dateFormat }}</span>
       </div>
     <!-- <img :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" class="thumb"/> -->
       <div class="card-content">
@@ -20,6 +20,9 @@
   </div>
 </template>
 <script>
+
+import moment from 'moment'
+
 export default {
   name: 'user-history',
   data: () => ({
@@ -33,12 +36,26 @@ export default {
       return this.$store.getters.loading
     }
   },
+  filters: {
+    dateFormat: function (value) {
+      var date = null
+      var dateTime
+      if (!value) return ''
+      var datePart = value.slice(0, 10)
+      var timePart = value.slice(11, 17)
+      datePart = datePart.split('/').reverse().join('-')
+      dateTime = datePart + timePart
+      console.log(dateTime)
+      date = moment(dateTime).calendar()  // .format('MMMM Do YYYY, hh:mm:ss a')
+      return date
+    }
+  },
   mounted () {
     console.log(this.markers)
   },
   watch: {
     markers (val) {
-      console.log('watched: ' + JSON.stringify(val))
+      // console.log('watched: ' + JSON.stringify(val))
     }
   }
 }

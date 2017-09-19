@@ -72,9 +72,9 @@
                   </div>
                 </div>
               </div>
-                  <img v-if="imageURL != ''" :src="imageURL" style="height: 70px; width: 70px; margin-left: 50px"/>
+                  <img v-if="imageURL != ''" :src="imageURL" style="height: 80px; width: 80px; margin-left: 50px; border-radius: 50%"/>
                   <img v-if="imageURL === ''" src="../assets/placeholder.png" style="height: 70px; width: 70px; margin-left: 50px;"/>
-                  <button style="margin-bottom:30px;" class="primary" @click="onFileSelect">Avatar</button>
+                  <button style="margin-bottom:30px;" class="primary clear small" @click="onFileSelect">Change</button>
                   <input type="file" style="visibility: hidden; display: none" ref="filepicker" @change="onFileSelected" accept="image/*">
       </div>
             </div>
