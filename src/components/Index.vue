@@ -8,7 +8,7 @@
       <q-toolbar-title :padding="1">
         DarkSkies
       </q-toolbar-title>
-      <button class="hide-on-drawer-visible" @click="$refs.rightDrawer.open()">
+      <button class="hcordovaide-on-drawer-visible" @click="$refs.rightDrawer.open()">
       <i v-if="imageURL ===''">perm_identity</i>
       <img v-if="imageURL != ''" :src="imageURL" style="height: 35px; width: 35px; border-radius: 50%"/>
     </button>
@@ -76,7 +76,7 @@
                   <img v-if="imageURL != ''" :src="imageURL" style="height: 80px; width: 80px; margin-left: 50px; border-radius: 50%"/>
                   <img v-if="imageURL === ''" src="../assets/placeholder.png" style="height: 70px; width: 70px; margin-left: 50px;"/>
                   <!-- <button style="margin-bottom:30px;" class="primary clear small" @click="onFileSelect">Change</button> -->
-                  <input type="file" id="file" class="inputfile" ref="filepicker" @change="onFileSelected" accept="image/*" capture>
+                  <input type="file" id="file" class="inputfile" ref="filepicker" @change="onFileSelected" accept="image/*" capture />
                   <label for="file">CHANGE</label>
       </div>
             </div>
@@ -154,7 +154,7 @@ export default {
     onFileSelected (event) {
       const files = event.target.files
       // if (!files) return ''
-      console.log(files)
+      window.alert(files)
       let filename = files[0].name
       this.filename = filename
       console.log(filename)
@@ -186,7 +186,7 @@ export default {
   },
   watch: {
     loggedIn () {
-      // this.$router.push('/signin')
+      this.$router.push('/signin')
     }
   },
   beforeDestroy () {
