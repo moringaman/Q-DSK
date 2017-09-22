@@ -21,6 +21,7 @@
     -->
     <div class="layout-view">
     <app-map></app-map>
+
     <!-- <span style="font-size: 12px;">{{ user }}</span> -->
 
     </div>
@@ -115,6 +116,7 @@
 
 // import { Utils, Platform } from 'quasar'
 import Map from './map.vue'
+
 // import firebase from 'firebase'
 export default {
   components: {

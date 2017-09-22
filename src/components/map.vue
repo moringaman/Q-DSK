@@ -37,10 +37,10 @@
        text-align: center;
        font-size: 14px;">
          {{statusText}}
-         <button @click="setTheme('light')" class="theme_btn primary small circular" id="light_theme"><i>brush</i></button>
+         <!-- <button @click="setTheme('light')" class="theme_btn primary small circular" id="light_theme"><i>brush</i></button>
           <button @click="setTheme('green')" class="theme_btn primary small circular" id="green_theme"><i>brush</i></button>
           <button class="theme_btn primary small circular" id="dark_theme"><i>brush</i></button>
-
+        -->
       </div>
     </div>
     <div slot="visible">
@@ -61,21 +61,23 @@
          <i id="world">public</i>
        <div class="mcount" id="usermarker">{{pastMarkers.length}}</div>
         </div>
-
       </div>
     </div>
   </gmap-map>
+  <events-alert class="events-alert"></events-alert>
 </q-layout>
 
 </template>
 
 <script>
 import CreateNewMarker from '../components/CreateMarker.vue'
+import EventsAlert from './EventsAlert.vue'
 // import axios from 'axios'
 import Vue from 'vue'
 export default {
   components: {
-    appCreatenew: CreateNewMarker
+    appCreatenew: CreateNewMarker,
+    eventsAlert: EventsAlert
   },
   data: function () {
     return {
@@ -226,6 +228,15 @@ export default {
   font-size: 10px;
   text-align: center;
 
+}
+
+.events-alert {
+  top: 20px;
+  left: 87vw;
+  width: 70vw;
+  position: absolute;
+  height: 50px;
+  z-index: 1000;
 }
 
 .gm-style .gm-style-iw {
