@@ -27,6 +27,11 @@ export default {
   },
   methods: {
 
+  },
+  computed: {
+    revMarkers () {
+      return this.markers.slice().reverse()
+    }
   }
 }
 </script>

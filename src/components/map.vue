@@ -232,11 +232,12 @@ export default {
 
 .events-alert {
   top: 20px;
-  left: 87vw;
+  right: 10px;
   width: 70vw;
   position: absolute;
   height: 50px;
-  z-index: 1000;
+  z-index: 2;
+  text-align: right;
 }
 
 .gm-style .gm-style-iw {

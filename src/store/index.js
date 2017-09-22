@@ -12,6 +12,8 @@ export const store = new Vuex.Store({
   state: {
     // center: {lat: 54.0, lng: -1.6},
     location: '',
+    locationTown: '',
+    locationCountry: '',
     loadedMarkers: [],
     currentUser: [],
     imageRGB: {},
@@ -28,6 +30,9 @@ export const store = new Vuex.Store({
     },
     setLocationTown (state, payload) {
       state.locationTown = payload
+    },
+    setLocationCountry (state, payload) {
+      state.locationCountry = payload
     },
     createMarker (state, payload) {
       state.loadedMarkers.push(...payload)
@@ -78,7 +83,9 @@ export const store = new Vuex.Store({
         Axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true`)
           .then(response => {
             let locationTown = response.data.results[2].address_components[3].long_name
+            let locationCountry = response.data.results[2].address_components[6].long_name
             commit('setLocationTown', locationTown)
+            commit('setLocationTown', locationCountry)
           })
         commit('setLocation', location)
       }, (error) => {
@@ -389,6 +396,9 @@ export const store = new Vuex.Store({
     },
     locationTown (state) {
       return state.locationTown
+    },
+    locationCountry (state) {
+      return state.locationCountry
     },
     loadedMarkers (state) {
       return state.loadedMarkers

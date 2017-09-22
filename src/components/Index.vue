@@ -10,7 +10,7 @@
       </q-toolbar-title>
       <button class="hcordovaide-on-drawer-visible" @click="$refs.rightDrawer.open()">
       <i v-if="imageURL ===''">perm_identity</i>
-      <img v-if="imageURL != ''" :src="imageURL" style="height: 35px; width: 35px; border-radius: 50%"/>
+      <img v-if="imageURL != ''" :src="imageURL" style="height: 45px; width: 45px; border-radius: 50%; margin-bottom: -5px;"/>
     </button>
     </div>
 
@@ -154,9 +154,9 @@ export default {
       this.$refs.filepicker.click()
     },
     onFileSelected (event) {
+      this.imageURL = ''
       const files = event.target.files
       // if (!files) return ''
-      window.alert(files)
       let filename = files[0].name
       this.filename = filename
       console.log(filename)
@@ -164,9 +164,9 @@ export default {
         window.alert('please select a valid file')
       }
       const fileReader = new FileReader()
-      fileReader.addEventListener('load', () => {
+      fileReader.onload = (event) => {
         this.imageURL = fileReader.result
-      })
+      }
       fileReader.readAsDataURL(files[0])
       this.image = files[0]
     },

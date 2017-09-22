@@ -135,6 +135,7 @@ export default {
         photoDesc: this.photoDesc,
         dateTime: timeTaken,
         town: this.$store.getters.locationTown,
+        country: this.$store.getters.locationCountry,
         location: {
           lat: this.$store.getters.location.lat,
           lng: this.$store.getters.location.lng
