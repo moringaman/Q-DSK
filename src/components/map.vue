@@ -27,7 +27,7 @@
        left: 0;
        right: 0;
        line-height: 25px;
-       bottom: 580px;
+       bottom: 10px;
        background-color: royalblue;
        color: white;
        position: absolute;
