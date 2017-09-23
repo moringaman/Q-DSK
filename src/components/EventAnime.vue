@@ -3,8 +3,9 @@
     <img @click="toggleMarkerDetails" class="thumb" :src="marker.downloadURL"/>
     <template v-if="showMarkerDetails" class="ribbon">
       <div class="marker-detail">
-        {{marker.town | firstWord}}
+        {{marker.town | firstWord}} {{marker.country | firstWord}}
           {{marker.dateTime | timeAgo}}
+
       </div>
     </template>
   </div>

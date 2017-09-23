@@ -85,7 +85,7 @@ export const store = new Vuex.Store({
             let locationTown = response.data.results[2].address_components[3].long_name
             let locationCountry = response.data.results[2].address_components[6].long_name
             commit('setLocationTown', locationTown)
-            commit('setLocationTown', locationCountry)
+            commit('setLocationCountry', locationCountry)
           })
         commit('setLocation', location)
       }, (error) => {
