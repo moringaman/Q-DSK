@@ -18,7 +18,7 @@
       :position="m.location"
       :clickable="true"
       :draggable="false"
-      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.dateTime + ' in ' + m.town"
+      @mouseover="statusText = 'Trails seen by ' + m.sender + ' @ ' + m.dateTime + ' in ' + m.town + ' ' + m.country"
       @mouseout="statusText = null"
       @click="toggleInfoWindow(m,index)">
     </gmap-marker>
@@ -37,10 +37,6 @@
        text-align: center;
        font-size: 14px;">
          {{statusText}}
-         <!-- <button @click="setTheme('light')" class="theme_btn primary small circular" id="light_theme"><i>brush</i></button>
-          <button @click="setTheme('green')" class="theme_btn primary small circular" id="green_theme"><i>brush</i></button>
-          <button class="theme_btn primary small circular" id="dark_theme"><i>brush</i></button>
-        -->
       </div>
     </div>
     <div slot="visible">
@@ -233,7 +229,7 @@ export default {
 .events-alert {
   top: 20px;
   right: 15px;
-  
+
   position: absolute;
   height: 50px;
   z-index: 0;

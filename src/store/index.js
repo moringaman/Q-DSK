@@ -285,7 +285,6 @@ export const store = new Vuex.Store({
             Loading.hide()
             commit('setError', error)
             store.dispatch('showMessage', {message: error, color: 'rgba(255,0,0, 0.6)', icon: 'error_outline'})
-            // alert(error)
           }
         )
     },
@@ -305,13 +304,6 @@ export const store = new Vuex.Store({
         }
       })
     },
-    // async getAvatar ({dispatch}, payload) {
-      // TODO Use axios to fetch avatar data
-      // const URL = `http://www.avatarapi.com/avatar.asmx/GetProfile?email=${payload}`
-      // const CRED = `&username=webnostix&password=Malachi01`
-      // const response = await Axios.get(URL + CRED)
-      // return response.json()
-    // },
     createUserProfile (payload) {
       return new Promise((resolve, reject) => {
         firebase.database()
@@ -374,7 +366,6 @@ export const store = new Vuex.Store({
         )
     },
     loadCurrentUser ({dispatch}, payload) {
-      // let vm = this
       var db = firebase.database()
       var ref = db.ref('users')
       ref.orderByKey().equalTo(payload).limitToFirst(10)
@@ -387,7 +378,6 @@ export const store = new Vuex.Store({
       firebase.auth().signOut()
       commit('setUser', null)
       commit('setLoggedIn', false)
-      // commit('setCurrentUser', null)
     }
   },
   getters: {
