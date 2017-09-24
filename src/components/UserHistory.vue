@@ -4,13 +4,16 @@
     <div class="card" >
       <div class="card-title" :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" >
         <spinner v-show="loading" color="#000fff" :size="30" name="hourglass"></spinner>
-        <span class="title-text">{{ marker.dateTime | dateFormat }}</span>
-      </div>
+        <p class="title-text">
+          {{ marker.town | firstWord }}, {{ marker.country}}</p>
+           <p class="title-text"> {{ marker.dateTime | dateFormat }}
+          </span>
+      </p>
     <!-- <img :style="{backgroundImage: 'url(\'' + marker.downloadURL + '\' )' , backgroundPosition: 'center center'}" class="thumb"/> -->
-      <div class="card-content">
+      <!--<div class="card-content">
       {{ marker.photoDesc}} <br>
       {{ marker.town}}
-      </div>
+    </div> -->
     </div>
   </div>
   <div v-show="markers.length < 1">
@@ -18,6 +21,7 @@
   <p>You can record your sky pic by clicking on the orange button on the map screen</p>
 </div>
   </div>
+</div>
 </template>
 <script>
 
@@ -48,6 +52,10 @@ export default {
       console.log(dateTime)
       date = moment(dateTime).calendar()  // .format('MMMM Do YYYY, hh:mm:ss a')
       return date
+    },
+    firstWord (value) {
+      let firstWord = value.substr(0, value.indexOf(' '))
+      return firstWord
     }
   },
   mounted () {
@@ -78,7 +86,11 @@ export default {
 
 .title-text {
   background-color: rgba(0,0,0, 0.4);
-  padding: 3px 3px;
+  padding: 3px 5px;
+  font-size: 14px;
+  margin-bottom: 0px;
+  line-height:  14px;
+  margin-left: -15px;
 }
 
 spinner {

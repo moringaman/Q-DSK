@@ -78,7 +78,7 @@
                   <img v-if="imageURL === ''" src="../assets/placeholder.png" style="height: 70px; width: 70px; margin-left: 50px;"/>
                   <!-- <button style="margin-bottom:30px;" class="primary clear small" @click="onFileSelect">Change</button> -->
                   <input type="file" id="file" class="inputfile" ref="filepicker" @change="onFileSelected" accept="image/*" capture />
-                  <label for="file">CHANGE</label>
+                  <label for="file">UPLOAD</label>
       </div>
             </div>
 

@@ -232,8 +232,8 @@ export default {
 
 .events-alert {
   top: 20px;
-  right: 10px;
-  width: 70vw;
+  right: 15px;
+  width: 60vw;
   position: absolute;
   height: 50px;
   z-index: 2;

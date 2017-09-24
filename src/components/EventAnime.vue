@@ -1,12 +1,13 @@
 <template>
   <div class="main">
     <img @click="toggleMarkerDetails" class="thumb" :src="marker.downloadURL"/>
-    <template v-if="showMarkerDetails" class="ribbon">
+    <template v-if="showMarkerDetails">
+      <transition name="fade">
       <div class="marker-detail">
-        {{marker.town | firstWord}} {{marker.country | firstWord}}
+        {{marker.town | firstWord}}, {{marker.country}} <br>
           {{marker.dateTime | timeAgo}}
-
       </div>
+    </transition>
     </template>
   </div>
 </template>
@@ -62,7 +63,7 @@ export default {
   margin-bottom: 5px;
   border-radius: 50%;
   border: 1px solid #ffffff;
-  right: 30px;
+  right: 40;
 }
 
 template {
@@ -76,19 +77,28 @@ template {
 }
 
 .marker-detail {
-  padding-right: 10px;
   position: relative;
   display: block;
   background: rgba(0,0,0,0.7);
   color: #ffffff;
-  top: -50px;
+  top: -55px;
   right: 50px;
-  z-index: -1;
+  z-index: 0;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 12px;
   height: 45px;
-  padding: 7px;
+  padding: 5px 10px;
   text-align: left;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1500ms ease-in
+}
+.fade-leave-active {
+  transition: opacity 500ms linear;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 
 
