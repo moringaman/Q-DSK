@@ -55,7 +55,7 @@ export default {
   }
 }
 </script>
-<style lang="css">
+<style lang="css" scoped>
 
 .thumb {
   width: 50px;
@@ -83,7 +83,7 @@ template {
   color: #ffffff;
   top: -55px;
   right: 50px;
-  z-index: 0;
+  z-index: -1;
   border-radius: 10px;
   font-size: 12px;
   height: 45px;

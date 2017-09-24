@@ -233,10 +233,10 @@ export default {
 .events-alert {
   top: 20px;
   right: 15px;
-  width: 60vw;
+  
   position: absolute;
   height: 50px;
-  z-index: 2;
+  z-index: 0;
   text-align: right;
 }
 
@@ -267,6 +267,7 @@ export default {
             color: #fff;
             font-size: 16px;
         }
+
   .indicator {
     text-align: center;
     width: 50px;
