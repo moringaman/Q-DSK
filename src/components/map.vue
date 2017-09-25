@@ -27,7 +27,7 @@
        left: 0;
        right: 0;
        line-height: 25px;
-       bottom: 10px;
+       bottom: 25px;
        background-color: royalblue;
        color: white;
        position: absolute;
@@ -40,11 +40,11 @@
       </div>
     </div>
     <div slot="visible">
-      <div style="bottom: 0;
+      <div style="
        left: 0;
        right: 0;
        line-height: 50px;
-       bottom: 10px;
+       bottom: 30px;
        background-color: rgba(0,0,0, 0.0);
        color: white;
        position: absolute;

@@ -133,7 +133,8 @@ export const store = new Vuex.Store({
       commit('setLoading', true)
       const db = firebase.database()
       const ref = db.ref('markers')
-      ref.orderByKey().limitToFirst(1)
+      // ref.orderByKey().limitToFirst(1)
+      ref.orderByChild('dateTime').limitToFirst(1)
       ref.on('value', snap => {
         let keys = []
         // console.log(snap.val())
@@ -228,6 +229,7 @@ export const store = new Vuex.Store({
         rgb.g = ~~(rgb.g / count)
         rgb.b = ~~(rgb.b / count)
         window.alert(JSON.stringify(rgb))
+        // TODO call rgbCheck(rgb) helper to check for correct val, return if invalid
         store.dispatch('setImageRGB', rgb)
         var dataURL = c.toDataURL('image/jpeg', 0.75)
         Loading.show(

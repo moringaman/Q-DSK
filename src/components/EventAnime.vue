@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import moment from 'moment'
+// import moment from 'moment'
 
 export default {
 
@@ -31,21 +31,6 @@ export default {
           this.showMarkerDetails = false
         }, 3000)
       }
-    }
-  },
-  filters: {
-    timeAgo (value) {
-      let dateTime
-      var datePart = value.slice(0, 10)
-      var timePart = value.slice(11, 17)
-      datePart = datePart.split('/').reverse().join('-')
-      dateTime = datePart + timePart
-      let timeVal = moment(dateTime).startOf('minute').fromNow()
-      return timeVal
-    },
-    firstWord (value) {
-      let firstWord = value.substr(0, value.indexOf(' '))
-      return firstWord
     }
   },
   watch: {

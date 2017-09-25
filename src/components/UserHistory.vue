@@ -59,7 +59,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this.markers)
+    console.log('users markers: ' + this.markers)
   },
   watch: {
     markers (val) {

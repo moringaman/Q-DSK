@@ -14,8 +14,26 @@ import firebase from 'firebase'
 import { config } from './helpers/firebaseConfig'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import MapStyle from './helpers/mapstyle'
+import moment from 'moment'
+
+Vue.use(moment)
 
 Vue.prototype.$mapstyle = MapStyle
+
+Vue.filter('firstWord', function (value) {
+  let firstWord = value.substr(0, value.indexOf(' '))
+  return firstWord
+})
+
+Vue.filter('timeAgo', function (value) {
+  let dateTime
+  var datePart = value.slice(0, 10)
+  var timePart = value.slice(11, 17)
+  datePart = datePart.split('/').reverse().join('-')
+  dateTime = datePart + timePart
+  let timeVal = moment(dateTime).startOf('minute').fromNow()
+  return timeVal
+})
 
 Vue.use(Quasar, {
   components: {

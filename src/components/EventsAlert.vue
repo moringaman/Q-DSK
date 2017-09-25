@@ -1,5 +1,6 @@
 <template>
   <div id="">
+    <div class="label" id="latest">LATEST</div>
     <div class="alert" v-for="(marker, index) in markers">
       <!-- TODO Pass as slot to child where you place show on click logic -->
       <wx-event-anime :marker="marker"></wx-event-anime>
@@ -25,9 +26,6 @@ export default {
   firebase: {
     markers: markersRef
   },
-  methods: {
-
-  },
   computed: {
     revMarkers () {
       return this.markers.slice().reverse()
@@ -36,5 +34,13 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-
+.label {
+  background-color: green;
+  color: white;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 3px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
 </style>
