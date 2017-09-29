@@ -6,7 +6,7 @@
       <i>menu</i>
     </button>
       <q-toolbar-title :padding="1">
-        DarkSkies
+      <img src="../assets/logoTransWhite.png" style="width: 170px;"/>
       </q-toolbar-title>
       <button class="hcordovaide-on-drawer-visible" @click="$refs.rightDrawer.open()">
       <i v-if="imageURL ===''">perm_identity</i>

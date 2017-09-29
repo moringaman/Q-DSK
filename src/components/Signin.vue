@@ -2,7 +2,7 @@
   <q-layout>
   <div class="layout-view">
     <div class="layout-padding form">
-   <img src="../assets/DarkSkies_Logo.png">
+   <img src="../assets/logoTransWhite.png" style="width: 200px;"/>
         <div class="floating-label">
           <input required v-model="email" class="full-width">
           <label><i class="material-icons">email</i>Your email</label>
@@ -73,7 +73,7 @@ export default {
 }
 
 .form {
-  margin-top: 50px;
+  margin-top: 60px;
   margin-left: 0px;
   padding: 10px 50px;
 
@@ -86,7 +86,7 @@ input {
 }
  img {
    width: 25vh;
-   margin-bottom: 5vh;
+   margin-bottom: 15vh;
  }
 
 input:nth-child(2) {

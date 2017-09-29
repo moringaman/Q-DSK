@@ -1,12 +1,12 @@
 <template>
   <q-layout>
   <div class="layout-view">
-    <h4>Sign Up</h4>
     <div class="layout-padding form">
+      <img src="../assets/logoTransWhite.png" style="width: 200px;"/>
    <!-- <img src="../assets/DarkSkies_Logo.png"> -->
    <div class="floating-label">
      <input required :class="{'has-error':!userName == '' && !userName}" v-model="userName" class="full-width">
-     <label><i class="material-icons">email</i>Username</label>
+     <label><i class="material-icons">perm_identity</i>Username</label>
    </div>
         <div class="floating-label">
           <input required :class="{'has-error':!email == '' && !isValid}" v-model="email" class="full-width">
@@ -16,13 +16,14 @@
           <input required v-model="password" type="password" class="full-width">
           <label><i class="material-icons">lock</i>Your password</label>
         </div>
-        <div class="floating-label">
+        <!-- <div class="floating-label">
           <input required v-model="passwordComf" type="password" class="full-width"
           :class="{'has-error':!matchFound}">
           <label><i class="material-icons">lock</i>Confirm password</label>
         </div>
-        <button :class="{'disabled':!matchFound || !isValid}" class="light full-width outline big" @click="signUp">Sign Up</button>
-        <router-link :to="'/signin'">Already have an account Sign In</router-link>
+        <button :class="{'disabled':!matchFound || !isValid}" class="light full-width outline big" @click="signUp">Sign Up</button> -->
+        <button :class="{'disabled':!isValid}" class="light full-width outline big" @click="signUp">Sign Up</button>
+        <router-link :to="'/signin'">Have an account? Sign In</router-link>
     </div>
   </div>
 </q-layout>
@@ -106,6 +107,10 @@ export default {
   padding: 10px 50px;
 
 
+}
+
+.floating-label {
+  color: #fff;
 }
 
 input {
