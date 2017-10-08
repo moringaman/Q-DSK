@@ -1,5 +1,13 @@
 <template>
   <q-layout>
+    <div class="timeperiods">
+      <ul>
+        <li :class="{'active-period': classObject.isDay}" :style="notactive" @click="changePeriod('isDay')">Day</li>
+        <li :class="{'active-period': classObject.isWeek}" :style="notactive" @click="changePeriod('isWeek')">Week</li>
+        <li :class="{'active-period': classObject.isMonth}" :style="notactive" @click="changePeriod('isMonth')">Month</li>
+        <li :class="{'active-period': classObject.isYear}" :style="notactive" @click="changePeriod('isYear')">Year</li>
+      </ul>
+    </div>
     <gmap-map
     :center="{lat: location.lat, lng: location.lng}"
     :zoom="6"
@@ -80,6 +88,10 @@ export default {
       center: {lat: 54.0, lng: -1.6},
       statusText: '',
       theme: 'green',
+      notactive: {
+        backgroundColor: 'rgba(0,0,0,0.4)'
+      },
+      classObject: {isDay: false},
       infoContent: '',
       infoPic: '',
       infoWindowPos: {
@@ -124,6 +136,12 @@ export default {
     },
     markerNumber () {
       return this.$store.getters.loadedMarkers.length
+    },
+    markerPeriod () {
+      // var markers = this.markers
+      // var timePeriod = this.timePeriod
+      // markers = markers.filter((marker) => markers.dateTime <  )
+      // return markers
     }
   },
   mounted () {
@@ -178,6 +196,13 @@ export default {
     setTheme: function (e) {
       this.theme = e
       Vue.$gmapDefaultResizeBus.$emit('resize')
+    },
+    changePeriod (data) {
+      console.log(data)
+      let classObject = {}
+      classObject[data] = true
+      console.log(classObject)
+      this.classObject = classObject
     }
   },
   beforeMount () {
@@ -197,6 +222,37 @@ export default {
   height: 150px;
   border-radius: 3px;
 }
+
+.timeperiods {
+  position: absolute;
+  top: 0px;
+  left: -15px;
+  z-index: 100;
+}
+
+.active-period {
+ background-color: green !important;
+}
+
+.not-active {
+  background-color: rgba(0,0,0,0.4);
+}
+
+.timeperiods li {
+  list-style: none;
+    display: inline-block;
+    font-size: 0.7rem;
+    line-height: 1rem;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    width: 50px;
+    color: white;
+    text-transform: uppercase;
+    padding: 0px 5px;
+    text-align: center;
+}
+
+
 
 #world {
   background-color: black;

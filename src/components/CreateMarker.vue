@@ -58,6 +58,7 @@
 import FilePath from '../helpers/filepath.js'
 import UserMarkers from './UserHistory.vue'
 import * as firebase from 'firebase'
+import moment from 'moment'
 // import { Loading } from 'quasar'
 export default {
 
@@ -126,7 +127,7 @@ export default {
       //   hour: '2-digit',
       //   minute: '2-digit'
       // }
-      let timeTaken = new Date().toLocaleString() // .toLocaleDateString(options)
+      let timeTaken = moment() // new Date().toLocaleString() // .toLocaleDateString(options)
       const markerData = {
         userId: this.user.uid,
         image: this.photo,
