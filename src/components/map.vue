@@ -227,7 +227,7 @@ export default {
   position: absolute;
   top: 0px;
   left: -15px;
-  z-index: 100;
+  z-index: 10;
 }
 
 .active-period {

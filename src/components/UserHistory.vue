@@ -43,13 +43,13 @@ export default {
   filters: {
     dateFormat: function (value) {
       var date = null
-      var dateTime
-      if (!value) return ''
-      var datePart = value.slice(0, 10)
-      var timePart = value.slice(11, 17)
-      datePart = datePart.split('/').reverse().join('-')
-      dateTime = datePart + timePart
-      console.log(dateTime)
+      var dateTime = value
+      // if (!value) return ''
+      // var datePart = value.slice(0, 10)
+      // var timePart = value.slice(11, 17)
+      // datePart = datePart.split('/').reverse().join('-')
+      // dateTime = datePart + timePart
+      // console.log(dateTime)
       date = moment(dateTime).calendar()  // .format('MMMM Do YYYY, hh:mm:ss a')
       return date
     },
@@ -59,7 +59,7 @@ export default {
     }
   },
   mounted () {
-    console.log('users markers: ' + this.markers)
+    console.log('users markers: ' + JSON.stringify(this.markers))
   },
   watch: {
     markers (val) {

@@ -5,6 +5,7 @@ import { Loading, Toast } from 'quasar'
 import MyUid from '../helpers/uid.js'
 // import RgbCheck from '../helpers/rgbcheck.js'
 import Axios from 'axios'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -430,6 +431,9 @@ export const store = new Vuex.Store({
           userArr.push(arr[i])
         }
       }
+      userArr.sort((a, b) => {
+        return moment(a.dateTime) - moment(b.dateTime)
+      })
       return userArr
     }
   }
